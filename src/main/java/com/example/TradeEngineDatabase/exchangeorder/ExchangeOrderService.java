@@ -18,7 +18,7 @@ public class ExchangeOrderService {
     }
 
     public void addNewExchangeOrder(ExchangeOrder exchangeOrder) {
-        Optional<ExchangeOrder> exchangeOrderOptional = exchangeOrderRepository.findExchangeOrderById(exchangeOrder.getClientOrderId());
+        Optional<ExchangeOrder> exchangeOrderOptional = exchangeOrderRepository.findExchangeOrderById(exchangeOrder.getExchangeOrderId());
         if(exchangeOrderOptional.isPresent()){
             throw new IllegalStateException("Id already taken.");
         }
@@ -38,7 +38,7 @@ public class ExchangeOrderService {
     }
 
     @Transactional
-    public void updateExchangeOrder(Long exchangeOrderId, Double price, Integer quantity) {
+    public void updateExchangeOrder(String exchangeOrderId, Double price, Integer quantity) {
         ExchangeOrder exchangeOrder = exchangeOrderRepository.findExchangeOrderById(exchangeOrderId).orElseThrow(() -> new IllegalStateException("ExchangeOrder with id " + exchangeOrderId + " does not exist."));
 
         if(price != null && !Objects.equals(exchangeOrder.getPrice(),price)){

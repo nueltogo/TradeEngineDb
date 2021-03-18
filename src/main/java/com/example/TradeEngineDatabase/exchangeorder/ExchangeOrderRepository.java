@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface ExchangeOrderRepository extends JpaRepository<ExchangeOrder, Long> {
-    @Query("SELECT s FROM ExchangeOrder s WHERE s.id = ?1")
-    Optional<ExchangeOrder> findExchangeOrderById(Long exchangeOrderId);
+    @Query("SELECT e FROM ExchangeOrder e WHERE e.id = ?1")
+    Optional<ExchangeOrder> findExchangeOrderById(String exchangeOrderId);
 }

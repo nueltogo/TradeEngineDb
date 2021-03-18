@@ -34,7 +34,7 @@ public class ExchangeOrderController {
 
     @PutMapping(path = "{exchangeOrderId}")
     public void updateExchangeOrder(
-            @PathVariable("exchangeOrderId") Long exchangeOrderId,
+            @PathVariable("exchangeOrderId") String exchangeOrderId,
             @RequestParam(required = false) double price,
             @RequestParam(required = false) int quantity
     ) {
