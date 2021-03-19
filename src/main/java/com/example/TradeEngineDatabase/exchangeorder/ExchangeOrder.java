@@ -10,6 +10,7 @@ import java.util.Date;
 @Table
 public class ExchangeOrder {
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private String exchangeOrderId;
     private String Product;
     private double price;
