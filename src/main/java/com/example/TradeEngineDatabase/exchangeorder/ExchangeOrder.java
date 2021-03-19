@@ -1,10 +1,10 @@
 package com.example.TradeEngineDatabase.exchangeorder;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table
@@ -17,12 +17,14 @@ public class ExchangeOrder {
     private long clientOrderId;
     private int exchange;
     private String status;
-    private LocalDate createdAt;
+
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS")
+    private Timestamp createdAt;
 
     public ExchangeOrder() {
     }
 
-    public ExchangeOrder(String exchangeOrderId, String product, double price, int quantity, long clientOrderId, int exchange, String status, LocalDate createdAt) {
+    public ExchangeOrder(String exchangeOrderId, String product, double price, int quantity, long clientOrderId, int exchange, String status) {
         this.exchangeOrderId = exchangeOrderId;
         Product = product;
         this.price = price;
@@ -30,7 +32,6 @@ public class ExchangeOrder {
         this.clientOrderId = clientOrderId;
         this.exchange = exchange;
         this.status = status;
-        this.createdAt = createdAt;
     }
 
     public String getExchangeOrderId() {
@@ -77,6 +78,10 @@ public class ExchangeOrder {
         return exchange;
     }
 
+    public void setCreatedAt() {
+        this.createdAt = new Timestamp(System.currentTimeMillis());
+    }
+
     public void setExchange(int exchange) {
         this.exchange = exchange;
     }
@@ -89,19 +94,18 @@ public class ExchangeOrder {
         this.status = status;
     }
 
-    public LocalDate getCreatedAt() {
-        return createdAt;
+    public Timestamp getCreatedAt() {
+        return this.createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
-        this.createdAt = createdAt;
-    }
 
     @Override
     public String toString() {
         return "ExchangeOrder{" +
-                "exchangeOrderId=" + exchangeOrderId +
+                "exchangeOrderId='" + exchangeOrderId + '\'' +
                 ", Product='" + Product + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
                 ", clientOrderId=" + clientOrderId +
                 ", exchange=" + exchange +
                 ", status='" + status + '\'' +
