@@ -18,6 +18,7 @@ public class ExchangeOrderService {
     }
 
     public void addNewExchangeOrder(ExchangeOrder exchangeOrder) {
+        //System.out.println(exchangeOrder);
         Optional<ExchangeOrder> exchangeOrderOptional = exchangeOrderRepository.findExchangeOrderById(exchangeOrder.getExchangeOrderId());
         if(exchangeOrderOptional.isPresent()){
             throw new IllegalStateException("Id already taken.");
