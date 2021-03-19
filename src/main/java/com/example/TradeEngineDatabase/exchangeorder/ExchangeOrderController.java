@@ -24,6 +24,7 @@ public class ExchangeOrderController {
     @PostMapping
     public void addExchangeOrder(@RequestBody ExchangeOrder exchangeOrder) {
         exchangeOrderService.addNewExchangeOrder(exchangeOrder);
+        // need to handle the error that may be raised
     }
 
     @DeleteMapping(path = "{exchangeOrderId}")
