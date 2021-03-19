@@ -25,7 +25,7 @@ public class ExchangeOrder {
     public ExchangeOrder() {
     }
 
-    public ExchangeOrder(String exchangeOrderId, String product, double price, int quantity, long clientOrderId, int exchange, String status) {
+    public ExchangeOrder(String exchangeOrderId, String product, double price, int quantity, long clientOrderId, int exchange, String status, Timestamp createdAt) {
         this.exchangeOrderId = exchangeOrderId;
         Product = product;
         this.price = price;
@@ -33,6 +33,7 @@ public class ExchangeOrder {
         this.clientOrderId = clientOrderId;
         this.exchange = exchange;
         this.status = status;
+        this.createdAt = createdAt;
     }
 
     public String getExchangeOrderId() {
