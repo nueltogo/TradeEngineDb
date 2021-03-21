@@ -32,6 +32,7 @@ public class Admin {
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
+
     public Admin(String name, String email, String password) {
         this.name = name;
         this.email = email;
@@ -72,6 +73,10 @@ public class Admin {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
     @Override
