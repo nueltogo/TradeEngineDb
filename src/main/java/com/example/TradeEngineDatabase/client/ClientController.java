@@ -21,22 +21,22 @@ public class ClientController {
     }
 
     @PostMapping("/login")
-    public Client getClient(@RequestBody Client client){
+    public Client getClient(@RequestBody Client client) throws IllegalStateException {
         return clientService.getClient(client);
     }
 
     @PostMapping("/id")
-    public Client getClientId(@RequestBody Client client){
+    public Client getClientId(@RequestBody Client client) throws IllegalStateException {
         return clientService.getClientId(client);
     }
 
     @PostMapping("/register")
-    public void registerNewClient(@RequestBody Client client) {
+    public void registerNewClient(@RequestBody Client client) throws IllegalStateException {
         clientService.addNewClient(client);
     }
 
     @DeleteMapping("/unregister/{clientId}")
-    public void deleteClient(@PathVariable("clientId") Long clientId) {
+    public void deleteClient(@PathVariable("clientId") Long clientId) throws IllegalStateException {
         clientService.deleteClient(clientId);
     }
 
@@ -46,7 +46,7 @@ public class ClientController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String password,
             @RequestParam(required = false) Double balance
-    ) {
+    ) throws IllegalStateException {
         clientService.updateClient(clientId, name, password, balance);
     }
 }

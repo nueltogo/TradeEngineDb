@@ -22,17 +22,17 @@ public class ClientOrderController {
     }
 
     @PostMapping("/get")
-    public ClientOrder getClientOrder(@RequestBody ClientOrder clientOrder){
+    public ClientOrder getClientOrder(@RequestBody ClientOrder clientOrder) throws IllegalStateException {
         return clientOrderService.getClientOrder(clientOrder);
     }
 
     @PostMapping("/new")
-    public void registerNewClientOrder(@RequestBody ClientOrder clientOrder) {
+    public void registerNewClientOrder(@RequestBody ClientOrder clientOrder) throws IllegalStateException {
         clientOrderService.addNewClientOrder(clientOrder);
     }
 
     @DeleteMapping("/delete/{clientOrderId}")
-    public void deleteClientOrder(@PathVariable("clientOrderId") Long clientOrderId) {
+    public void deleteClientOrder(@PathVariable("clientOrderId") Long clientOrderId) throws IllegalStateException {
         clientOrderService.deleteClientOrder(clientOrderId);
     }
 
@@ -41,7 +41,7 @@ public class ClientOrderController {
             @PathVariable("clientOrderId") Long clientOrderId,
             @RequestParam(required = false) Double price,
             @RequestParam(required = false) Integer quantity
-    ) {
+    ) throws IllegalStateException {
         clientOrderService.updateClientOrder(clientOrderId, price, quantity);
     }
 }

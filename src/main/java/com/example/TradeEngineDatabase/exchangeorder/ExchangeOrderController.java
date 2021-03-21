@@ -15,22 +15,22 @@ public class ExchangeOrderController {
     }
 
     @GetMapping("/all")
-    public List<ExchangeOrder> getExchangeOrders() {
+    public List<ExchangeOrder> getExchangeOrders() throws IllegalStateException {
         return exchangeOrderService.getExchangeOrders();
     }
 
     @PostMapping("/get")
-    public ExchangeOrder getExchangeOrder(@RequestBody ExchangeOrder exchangeOrder){
+    public ExchangeOrder getExchangeOrder(@RequestBody ExchangeOrder exchangeOrder) throws IllegalStateException {
         return exchangeOrderService.getExchangeOrder(exchangeOrder);
     }
 
     @PostMapping("/new")
-    public void addExchangeOrder(@RequestBody ExchangeOrder exchangeOrder) {
+    public void addExchangeOrder(@RequestBody ExchangeOrder exchangeOrder) throws IllegalStateException {
         exchangeOrderService.addNewExchangeOrder(exchangeOrder);
     }
 
     @DeleteMapping("/delete/{exchangeOrderId}")
-    public void deleteClient(@PathVariable("exchangeOrderId") Long exchangeOrderId) {
+    public void deleteClient(@PathVariable("exchangeOrderId") Long exchangeOrderId) throws IllegalStateException {
         exchangeOrderService.deleteExchangeOrder(exchangeOrderId);
     }
 
@@ -40,7 +40,7 @@ public class ExchangeOrderController {
             @PathVariable("exchangeOrderId") String exchangeOrderId,
             @RequestParam(required = false) Double price,
             @RequestParam(required = false) Integer quantity
-    ) {
+    ) throws IllegalStateException {
         exchangeOrderService.updateExchangeOrder(exchangeOrderId, price, quantity);
     }
 }

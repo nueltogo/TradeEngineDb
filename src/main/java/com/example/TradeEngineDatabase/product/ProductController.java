@@ -21,17 +21,18 @@ public class ProductController {
     }
 
     @PostMapping("/get")
-    public Product getProduct(@RequestBody Product product){
+    public Product getProduct(@RequestBody Product product) throws IllegalStateException {
+
         return productService.getProduct(product.getProductId());
     }
 
     @PostMapping("/new")
-    public void addNewProduct(@RequestBody Product product) {
+    public void addNewProduct(@RequestBody Product product) throws IllegalStateException {
         productService.addNewProduct(product);
     }
 
     @DeleteMapping("/delete/{productId}")
-    public void deleteProduct(@PathVariable("productId") Long productId) {
+    public void deleteProduct(@PathVariable("productId") Long productId) throws IllegalStateException {
         productService.deleteProduct(productId);
     }
 
@@ -41,7 +42,7 @@ public class ProductController {
             @RequestParam(required = false) Integer quantity,
             @RequestParam(required = false) Double lastTradedPrice,
             @RequestParam(required = false) String lastTradedSide
-    ) {
+    ) throws IllegalStateException {
         productService.updateProduct(productId,quantity,lastTradedPrice,lastTradedSide);
     }
 }
