@@ -26,6 +26,10 @@ public class Client {
     public Client() {
     }
 
+    public Client(long clientId) {
+        this.clientId = clientId;
+    }
+
     public Client(String email, String password) {
         this.email = email;
         this.password = password;
