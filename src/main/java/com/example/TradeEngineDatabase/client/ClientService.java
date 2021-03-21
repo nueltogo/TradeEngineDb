@@ -32,11 +32,19 @@ public class ClientService {
     }
 
     public Client getClient(Client client) {
-        Optional<Client> clientOptional = clientRepository.findClientByEmail(client.getEmail());
+        Optional<Client> clientOptional = clientRepository.findClientByEmailAndPass(client.getEmail(), client.getPassword());
         if(clientOptional.isPresent()){
             return clientOptional.get();
         }
-        throw new IllegalStateException("Client with email "+client.getEmail()+" does not exist.");
+        throw new IllegalStateException("Invalid Credentials");
+    }
+
+    public Client getClientId(Client client){
+        Optional<Client> clientOptional = clientRepository.findClientById(client.getClientId());
+        if(clientOptional.isPresent()){
+            return clientOptional.get();
+        }
+        throw new IllegalStateException("Client with id "+client.getClientId()+" does not exist");
     }
 
     public void deleteClient(Long clientId) {

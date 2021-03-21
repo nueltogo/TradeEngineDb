@@ -2,7 +2,6 @@ package com.example.TradeEngineDatabase.client;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table
@@ -27,8 +26,9 @@ public class Client {
     public Client() {
     }
 
-    public Client(String email) {
+    public Client(String email, String password) {
         this.email = email;
+        this.password = password;
     }
 
     public Client(String name, String email, String password, double balance) {
