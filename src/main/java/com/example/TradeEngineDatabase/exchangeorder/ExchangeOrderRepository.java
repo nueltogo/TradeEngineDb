@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ExchangeOrderRepository extends JpaRepository<ExchangeOrder, Long> {
+public interface ExchangeOrderRepository extends JpaRepository<ExchangeOrder, String> {
     @Query("SELECT e FROM ExchangeOrder e WHERE e.id = ?1")
     Optional<ExchangeOrder> findExchangeOrderById(String exchangeOrderId);
 }

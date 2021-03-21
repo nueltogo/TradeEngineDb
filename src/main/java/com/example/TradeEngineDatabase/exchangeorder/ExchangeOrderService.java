@@ -38,9 +38,9 @@ public class ExchangeOrderService {
         throw new IllegalStateException("Exchange Order with id "+exchangeOrder.getExchangeOrderId()+" does not exist.");
     }
 
-    public void deleteExchangeOrder(Long exchangeOrderId) {
-        boolean exists = exchangeOrderRepository.existsById(exchangeOrderId);
-        if(!exists){
+    public void deleteExchangeOrder(String exchangeOrderId) {
+        Optional<ExchangeOrder> exchangeOrderOptional = exchangeOrderRepository.findExchangeOrderById(exchangeOrderId);
+        if(!exchangeOrderOptional.isPresent()){
             throw new IllegalStateException("ExchangeOrder with id: "+exchangeOrderId+" does not exist.");
         }
         exchangeOrderRepository.deleteById(exchangeOrderId);

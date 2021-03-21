@@ -30,7 +30,7 @@ public class ExchangeOrderController {
     }
 
     @DeleteMapping("/delete/{exchangeOrderId}")
-    public void deleteClient(@PathVariable("exchangeOrderId") Long exchangeOrderId) throws IllegalStateException {
+    public void deleteClient(@PathVariable("exchangeOrderId") String exchangeOrderId) throws IllegalStateException {
         exchangeOrderService.deleteExchangeOrder(exchangeOrderId);
     }
 
