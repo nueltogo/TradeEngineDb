@@ -1,7 +1,7 @@
 package com.example.TradeEngineDatabase.product;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table
@@ -20,24 +20,23 @@ public class Product {
     private String ticker;
     private long portfolioId;
     private int quantity;
-    private LocalDate createdAt;
+    private double lastTradedPrice;
+    private String lastTradedSide;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public Product() {
     }
 
-    public Product(String ticker, long portfolioId, int quantity, LocalDate createdAt) {
-        this.ticker = ticker;
-        this.portfolioId = portfolioId;
-        this.quantity = quantity;
-        this.createdAt = createdAt;
+    public Product(long productId) {
+        this.productId = productId;
     }
 
-    public Product(long productId, String ticker, long portfolioId, int quantity, LocalDate createdAt) {
-        this.productId = productId;
+    public Product(String ticker, long portfolioId, int quantity, double lastTradedPrice, String lastTradedSide) {
         this.ticker = ticker;
         this.portfolioId = portfolioId;
         this.quantity = quantity;
-        this.createdAt = createdAt;
+        this.lastTradedPrice = lastTradedPrice;
+        this.lastTradedSide = lastTradedSide;
     }
 
     public long getProductId() {
@@ -72,21 +71,36 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public LocalDate getCreatedAt() {
+    public double getLastTradedPrice() {
+        return lastTradedPrice;
+    }
+
+    public void setLastTradedPrice(double lastTradedPrice) {
+        this.lastTradedPrice = lastTradedPrice;
+    }
+
+    public String getLastTradedSide() {
+        return lastTradedSide;
+    }
+
+    public void setLastTradedSide(String lastTradedSide) {
+        this.lastTradedSide = lastTradedSide;
+    }
+
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
-        this.createdAt = createdAt;
-    }
 
     @Override
     public String toString() {
         return "Product{" +
                 "productId=" + productId +
                 ", ticker='" + ticker + '\'' +
-                ", portfolioId='" + portfolioId + '\'' +
+                ", portfolioId=" + portfolioId +
                 ", quantity=" + quantity +
+                ", lastTradedPrice=" + lastTradedPrice +
+                ", lastTradedSide='" + lastTradedSide + '\'' +
                 ", createdAt=" + createdAt +
                 '}';
     }

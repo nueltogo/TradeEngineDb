@@ -1,7 +1,5 @@
 package com.example.TradeEngineDatabase.product;
 
-import com.example.TradeEngineDatabase.client.Client;
-import com.example.TradeEngineDatabase.portfolio.Portfolio;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -1,7 +1,5 @@
 package com.example.TradeEngineDatabase.product;
 
-import com.example.TradeEngineDatabase.clientorder.ClientOrder;
-import com.example.TradeEngineDatabase.clientorder.ClientOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +29,14 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public Product getProduct(long portfolioId) {
+        Optional<Product> productOptional = productRepository.findProductById(portfolioId);
+        if(productOptional.isPresent()){
+            return productOptional.get();
+        }
+        throw new IllegalStateException("product does not exist.");
+    }
+
     public void deleteProduct(Long productId) {
         boolean exists = productRepository.existsById(productId);
         if(!exists){
@@ -40,11 +46,19 @@ public class ProductService {
     }
 
     @Transactional
-    public void updateProduct(Long productId, Integer quantity) {
+    public void updateProduct(Long productId, Integer quantity, Double lastTradedPrice, String lastTradedSide) {
         Product product = productRepository.findProductById(productId).orElseThrow(() -> new IllegalStateException("Product with id " + productId + " does not exist."));
 
         if(quantity != null && !Objects.equals(product.getQuantity(),quantity)){
             product.setQuantity(quantity);
+        }
+
+        if(lastTradedPrice != null && !Objects.equals(product.getLastTradedPrice(),lastTradedPrice)){
+            product.setLastTradedPrice(lastTradedPrice);
+        }
+
+        if(lastTradedSide != null && lastTradedSide.length() > 0 && !Objects.equals(product.getLastTradedSide(),lastTradedSide)){
+            product.setLastTradedSide(lastTradedSide);
         }
     }
 }
