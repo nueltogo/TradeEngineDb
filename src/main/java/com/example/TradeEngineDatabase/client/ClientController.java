@@ -15,22 +15,32 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Client> getClients() {
         return clientService.getClients();
     }
 
-    @PostMapping
+    @PostMapping("/login")
+    public Client getClient(@RequestBody Client client){
+        return clientService.getClient(client);
+    }
+
+    @PostMapping("/id")
+    public Client getClientId(@RequestBody Client client){
+        return clientService.getClientId(client);
+    }
+
+    @PostMapping("/register")
     public void registerNewClient(@RequestBody Client client) {
         clientService.addNewClient(client);
     }
 
-    @DeleteMapping(path = "{clientId}")
+    @DeleteMapping("/unregister/{clientId}")
     public void deleteClient(@PathVariable("clientId") Long clientId) {
         clientService.deleteClient(clientId);
     }
 
-    @PutMapping(path = "{clientId}")
+    @PutMapping("/update/{clientId}")
     public void updateClient(
             @PathVariable("clientId") Long clientId,
             @RequestParam(required = false) String name,
