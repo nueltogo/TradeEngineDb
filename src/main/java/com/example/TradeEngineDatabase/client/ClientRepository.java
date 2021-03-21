@@ -10,5 +10,8 @@ import java.util.Optional;
 public interface ClientRepository extends JpaRepository<Client, Long> {
     @Query("SELECT s FROM Client s WHERE s.id = ?1")
     Optional<Client> findClientById(Long clientId);
+
+    @Query("SELECT s FROM Client s WHERE s.email = ?1")
+    Optional<Client> findClientByEmail(String email);
 }
 

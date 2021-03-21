@@ -27,6 +27,10 @@ public class Client {
     public Client() {
     }
 
+    public Client(String email) {
+        this.email = email;
+    }
+
     public Client(String name, String email, String password, double balance) {
         this.name = name;
         this.email = email;

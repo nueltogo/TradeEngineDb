@@ -20,6 +20,11 @@ public class ClientController {
         return clientService.getClients();
     }
 
+    @PostMapping(path = "getclient")
+    public Client getClient(@RequestBody Client client){
+        return clientService.getClient(client);
+    }
+
     @PostMapping
     public void registerNewClient(@RequestBody Client client) {
         clientService.addNewClient(client);

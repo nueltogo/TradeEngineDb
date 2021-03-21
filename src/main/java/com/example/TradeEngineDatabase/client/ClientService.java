@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientService {
@@ -30,6 +31,14 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
+    public Client getClient(Client client) {
+        Optional<Client> clientOptional = clientRepository.findClientByEmail(client.getEmail());
+        if(clientOptional.isPresent()){
+            return clientOptional.get();
+        }
+        throw new IllegalStateException("Client with email "+client.getEmail()+" does not exist.");
+    }
+
     public void deleteClient(Long clientId) {
         boolean exists = clientRepository.existsById(clientId);
         if(!exists){
@@ -40,7 +49,7 @@ public class ClientService {
 
     @Transactional
     public void updateClient(Long clientId, String name, String password, Double balance) {
-        Client client = clientRepository.findById(clientId).orElseThrow(() -> new IllegalStateException("Student with id " + clientId + " does not exist."));
+        Client client = clientRepository.findClientById(clientId).orElseThrow(() -> new IllegalStateException("Student with id " + clientId + " does not exist."));
 
         if(name != null && name.length() > 0 && !Objects.equals(client.getName(),name)){
             client.setName(name);
@@ -56,4 +65,6 @@ public class ClientService {
         }
 
     }
+
+
 }
