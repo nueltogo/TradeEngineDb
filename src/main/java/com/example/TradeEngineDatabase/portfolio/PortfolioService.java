@@ -27,6 +27,14 @@ public class PortfolioService {
         return portfolioRepository.findAll();
     }
 
+    public Portfolio getPortfolio(String name, int clientId) {
+        Optional<Portfolio> portfolioOptional = portfolioRepository.findPortfolioByClientIdAndName(name,clientId);
+        if(portfolioOptional.isPresent()){
+            return  portfolioOptional.get();
+        }
+        throw new IllegalStateException("Portfolio does not exist");
+    }
+
     public void deletePortfolio(Long portfolioId) {
         boolean exists = portfolioRepository.existsById(portfolioId);
         if(!exists){
@@ -34,4 +42,6 @@ public class PortfolioService {
         }
         portfolioRepository.deleteById(portfolioId);
     }
+
+
 }

@@ -16,17 +16,22 @@ public class PortfolioController {
         this.portfolioService = portfolioService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Portfolio> getPortfolios() {
         return portfolioService.getPortfolios();
     }
 
-    @PostMapping
+    @PostMapping("/get")
+    public Portfolio getPortfolio(@RequestBody Portfolio portfolio){
+        return portfolioService.getPortfolio(portfolio.getName(),portfolio.getClientId());
+    }
+
+    @PostMapping("/new")
     public void addNewPortfolio(@RequestBody Portfolio portfolio) {
         portfolioService.addNewPortfolio(portfolio);
     }
 
-    @DeleteMapping(path = "{portfolioId}")
+    @DeleteMapping("/delete/{portfolioId}")
     public void deleteClient(@PathVariable("portfolioId") Long portfolioId) {
         portfolioService.deletePortfolio(portfolioId);
     }

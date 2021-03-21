@@ -1,6 +1,7 @@
 package com.example.TradeEngineDatabase.portfolio;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table
@@ -18,19 +19,13 @@ public class Portfolio {
     private long portfolioId;
     private String name;
     private int clientId;
-
+    private LocalDateTime createdAt = LocalDateTime.now();
 
 
     public Portfolio() {
     }
 
     public Portfolio(String name, int clientId) {
-        this.name = name;
-        this.clientId = clientId;
-    }
-
-    public Portfolio(long portfolioId, String name, int clientId) {
-        this.portfolioId = portfolioId;
         this.name = name;
         this.clientId = clientId;
     }
@@ -57,6 +52,10 @@ public class Portfolio {
 
     public void setClientId(int clientId) {
         this.clientId = clientId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
     @Override
