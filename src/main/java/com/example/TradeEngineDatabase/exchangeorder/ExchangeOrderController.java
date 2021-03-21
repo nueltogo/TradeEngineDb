@@ -1,7 +1,5 @@
 package com.example.TradeEngineDatabase.exchangeorder;
 
-import com.example.TradeEngineDatabase.client.Client;
-import com.example.TradeEngineDatabase.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,27 +14,32 @@ public class ExchangeOrderController {
         this.exchangeOrderService = exchangeOrderService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<ExchangeOrder> getExchangeOrders() {
         return exchangeOrderService.getExchangeOrders();
     }
 
-    @PostMapping
+    @PostMapping("/get")
+    public ExchangeOrder getExchangeOrder(@RequestBody ExchangeOrder exchangeOrder){
+        return exchangeOrderService.getExchangeOrder(exchangeOrder);
+    }
+
+    @PostMapping("/new")
     public void addExchangeOrder(@RequestBody ExchangeOrder exchangeOrder) {
         exchangeOrderService.addNewExchangeOrder(exchangeOrder);
     }
 
-    @DeleteMapping(path = "{exchangeOrderId}")
+    @DeleteMapping("/delete/{exchangeOrderId}")
     public void deleteClient(@PathVariable("exchangeOrderId") Long exchangeOrderId) {
         exchangeOrderService.deleteExchangeOrder(exchangeOrderId);
     }
 
 
-    @PutMapping(path = "{exchangeOrderId}")
+    @PutMapping("/update/{exchangeOrderId}")
     public void updateExchangeOrder(
             @PathVariable("exchangeOrderId") String exchangeOrderId,
-            @RequestParam(required = false) double price,
-            @RequestParam(required = false) int quantity
+            @RequestParam(required = false) Double price,
+            @RequestParam(required = false) Integer quantity
     ) {
         exchangeOrderService.updateExchangeOrder(exchangeOrderId, price, quantity);
     }

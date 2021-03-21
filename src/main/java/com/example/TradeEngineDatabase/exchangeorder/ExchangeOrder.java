@@ -3,34 +3,38 @@ package com.example.TradeEngineDatabase.exchangeorder;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table
 public class ExchangeOrder {
     @Id
     private String exchangeOrderId;
-    private String Product;
-    private double price;
-    private int quantity;
+    private String product;
+    private Integer quantity;
+    private Double price;
+    private String side;
+    private Integer exchange;
     private long clientOrderId;
-    private int exchange;
     private String status;
-    private LocalDate createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public ExchangeOrder() {
     }
 
-    public ExchangeOrder(String exchangeOrderId, String product, double price, int quantity, long clientOrderId, int exchange, String status, LocalDate createdAt) {
+    public ExchangeOrder(String exchangeOrderId) {
         this.exchangeOrderId = exchangeOrderId;
-        Product = product;
-        this.price = price;
+    }
+
+    public ExchangeOrder(String exchangeOrderId, String product, Integer quantity, Double price, String side, Integer exchange, long clientOrderId, String status) {
+        this.exchangeOrderId = exchangeOrderId;
+        this.product = product;
         this.quantity = quantity;
-        this.clientOrderId = clientOrderId;
+        this.price = price;
+        this.side = side;
         this.exchange = exchange;
+        this.clientOrderId = clientOrderId;
         this.status = status;
-        this.createdAt = createdAt;
     }
 
     public String getExchangeOrderId() {
@@ -42,27 +46,43 @@ public class ExchangeOrder {
     }
 
     public String getProduct() {
-        return Product;
+        return product;
     }
 
     public void setProduct(String product) {
-        Product = product;
+        this.product = product;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public String getSide() {
+        return side;
+    }
+
+    public void setSide(String side) {
+        this.side = side;
+    }
+
+    public Integer getExchange() {
+        return exchange;
+    }
+
+    public void setExchange(Integer exchange) {
+        this.exchange = exchange;
     }
 
     public long getClientOrderId() {
@@ -73,14 +93,6 @@ public class ExchangeOrder {
         this.clientOrderId = clientOrderId;
     }
 
-    public int getExchange() {
-        return exchange;
-    }
-
-    public void setExchange(int exchange) {
-        this.exchange = exchange;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -89,21 +101,20 @@ public class ExchangeOrder {
         this.status = status;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(LocalDate createdAt) {
-        this.createdAt = createdAt;
     }
 
     @Override
     public String toString() {
         return "ExchangeOrder{" +
-                "exchangeOrderId=" + exchangeOrderId +
-                ", Product='" + Product + '\'' +
-                ", clientOrderId=" + clientOrderId +
+                "exchangeOrderId='" + exchangeOrderId + '\'' +
+                ", product='" + product + '\'' +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                ", side='" + side + '\'' +
                 ", exchange=" + exchange +
+                ", clientOrderId=" + clientOrderId +
                 ", status='" + status + '\'' +
                 ", createdAt=" + createdAt +
                 '}';

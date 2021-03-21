@@ -29,6 +29,15 @@ public class ExchangeOrderService {
         return exchangeOrderRepository.findAll();
     }
 
+    public ExchangeOrder getExchangeOrder(ExchangeOrder exchangeOrder){
+        System.out.println(exchangeOrder.getExchangeOrderId());
+        Optional<ExchangeOrder> exchangeOrderOptional = exchangeOrderRepository.findExchangeOrderById(exchangeOrder.getExchangeOrderId());
+        if(exchangeOrderOptional.isPresent()){
+            return exchangeOrderOptional.get();
+        }
+        throw new IllegalStateException("Exchange Order with id "+exchangeOrder.getExchangeOrderId()+" does not exist.");
+    }
+
     public void deleteExchangeOrder(Long exchangeOrderId) {
         boolean exists = exchangeOrderRepository.existsById(exchangeOrderId);
         if(!exists){
