@@ -1,7 +1,7 @@
 package com.example.TradeEngineDatabase.client;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 @Entity
 @Table
@@ -21,26 +21,24 @@ public class Client {
     private String email;
     private String password;
     private double balance;
-    private LocalDate createdAt;
+    private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 
     public Client() {
     }
 
-    public Client(String name, String email, String password, double balance, LocalDate createdAt) {
+    public Client(String name, String email, String password, double balance) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.balance = balance;
-        this.createdAt = createdAt;
     }
 
-    public Client(long clientId, String name, String email, String password, double balance, LocalDate createdAt) {
+    public Client(long clientId, String name, String email, String password, double balance) {
         this.clientId = clientId;
         this.name = name;
         this.email = email;
         this.password = password;
         this.balance = balance;
-        this.createdAt = createdAt;
     }
 
     public long getClientId() {
@@ -83,11 +81,11 @@ public class Client {
         this.balance = balance;
     }
 
-    public LocalDate getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
