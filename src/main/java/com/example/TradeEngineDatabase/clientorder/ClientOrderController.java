@@ -16,26 +16,31 @@ public class ClientOrderController {
         this.clientOrderService = clientOrderService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<ClientOrder> getClientOrders() {
         return clientOrderService.getClientOrders();
     }
 
-    @PostMapping
+    @PostMapping("/get")
+    public ClientOrder getClientOrder(@RequestBody ClientOrder clientOrder){
+        return clientOrderService.getClientOrder(clientOrder);
+    }
+
+    @PostMapping("/new")
     public void registerNewClientOrder(@RequestBody ClientOrder clientOrder) {
         clientOrderService.addNewClientOrder(clientOrder);
     }
 
-    @DeleteMapping(path = "{clientOrderId}")
+    @DeleteMapping("/delete/{clientOrderId}")
     public void deleteClientOrder(@PathVariable("clientOrderId") Long clientOrderId) {
         clientOrderService.deleteClientOrder(clientOrderId);
     }
 
-    @PutMapping(path = "{clientOrderId}")
+    @PutMapping("/update/{clientOrderId}")
     public void updateClientOrder(
             @PathVariable("clientOrderId") Long clientOrderId,
-            @RequestParam(required = false) double price,
-            @RequestParam(required = false) int quantity
+            @RequestParam(required = false) Double price,
+            @RequestParam(required = false) Integer quantity
     ) {
         clientOrderService.updateClientOrder(clientOrderId, price, quantity);
     }

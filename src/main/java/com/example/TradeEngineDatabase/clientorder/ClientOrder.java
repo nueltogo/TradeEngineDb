@@ -1,7 +1,7 @@
 package com.example.TradeEngineDatabase.clientorder;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table
@@ -25,25 +25,16 @@ public class ClientOrder {
     private int clientId;
     private String validationStatus;
     private String status;
-    private LocalDate createAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public ClientOrder() {
     }
 
-    public ClientOrder(String product, double price, int quantity, String side, int portfolioId, int clientId, String validationStatus, String status, LocalDate createAt) {
-        this.product = product;
-        this.price = price;
-        this.quantity = quantity;
-        this.side = side;
-        this.portfolioId = portfolioId;
-        this.clientId = clientId;
-        this.validationStatus = validationStatus;
-        this.status = status;
-        this.createAt = createAt;
+    public ClientOrder(long clientOrderId) {
+        this.clientOrderId = clientOrderId;
     }
 
-    public ClientOrder(long clientOrderId, String product, double price, int quantity, String side, int portfolioId, int clientId, String validationStatus, String status, LocalDate createAt) {
-        this.clientOrderId = clientOrderId;
+    public ClientOrder(String product, double price, int quantity, String side, int portfolioId, int clientId, String validationStatus, String status) {
         this.product = product;
         this.price = price;
         this.quantity = quantity;
@@ -52,15 +43,11 @@ public class ClientOrder {
         this.clientId = clientId;
         this.validationStatus = validationStatus;
         this.status = status;
-        this.createAt = createAt;
     }
+
 
     public long getClientOrderId() {
         return clientOrderId;
-    }
-
-    public void setClientOrderId(int clientOrderId) {
-        this.clientOrderId = clientOrderId;
     }
 
     public String getProduct() {
@@ -127,13 +114,10 @@ public class ClientOrder {
         this.status = status;
     }
 
-    public LocalDate getCreateAt() {
-        return createAt;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreateAt(LocalDate createAt) {
-        this.createAt = createAt;
-    }
 
     @Override
     public String toString() {
@@ -147,7 +131,7 @@ public class ClientOrder {
                 ", clientId=" + clientId +
                 ", validationStatus='" + validationStatus + '\'' +
                 ", status='" + status + '\'' +
-                ", createAt=" + createAt +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }

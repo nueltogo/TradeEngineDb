@@ -30,6 +30,14 @@ public class ClientOrderService {
         return clientOrderRepository.findAll();
     }
 
+    public ClientOrder getClientOrder(ClientOrder clientOrder){
+        Optional<ClientOrder> clientOrderOptional = clientOrderRepository.findClientOrderById(clientOrder.getClientOrderId());
+        if(clientOrderOptional.isPresent()){
+            return clientOrderOptional.get();
+        }
+        throw new IllegalStateException("Client Order with id "+clientOrder.getClientOrderId()+" does not exist");
+    }
+
     public void deleteClientOrder(Long clientOrderId) {
         boolean exists = clientOrderRepository.existsById(clientOrderId);
         if(!exists){
