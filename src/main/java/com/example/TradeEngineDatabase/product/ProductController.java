@@ -26,6 +26,11 @@ public class ProductController {
         return productService.getProduct(product.getProductId());
     }
 
+    @PostMapping("/portfolioId/{portfolioId}")
+    public List<Product> getProductsByPortfolio(@PathVariable("portfolioId") Long portfolioId){
+        return productService.getProductsInPortfolio(portfolioId);
+    }
+
     @PostMapping("/new")
     public void addNewProduct(@RequestBody Product product) throws IllegalStateException {
         productService.addNewProduct(product);

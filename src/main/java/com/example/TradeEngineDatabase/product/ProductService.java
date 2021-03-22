@@ -29,12 +29,20 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product getProduct(long portfolioId) {
-        Optional<Product> productOptional = productRepository.findProductById(portfolioId);
+    public Product getProduct(long productId) {
+        Optional<Product> productOptional = productRepository.findProductById(productId);
         if(productOptional.isPresent()){
             return productOptional.get();
         }
         throw new IllegalStateException("product does not exist.");
+    }
+
+    public List<Product> getProductsInPortfolio(long portfolioId){
+        Optional<List<Product>> optionalProducts = productRepository.findProductByPortfolio(portfolioId);
+        if(optionalProducts.isPresent()){
+            return optionalProducts.get();
+        }
+        throw new IllegalStateException("portfolio does not exist");
     }
 
     public void deleteProduct(Long productId) {
