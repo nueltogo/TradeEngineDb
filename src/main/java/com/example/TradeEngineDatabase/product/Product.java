@@ -26,7 +26,7 @@ public class Product {
     private String lastTradedSide;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "portfolioID")
+    @JoinColumn(name = "portfolio_Id")
     private Portfolio portfolio;
 
     private LocalDateTime createdAt = LocalDateTime.now();

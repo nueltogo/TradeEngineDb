@@ -20,16 +20,17 @@ public class Client {
             strategy = GenerationType.SEQUENCE,
             generator = "client_sequence"
     )
+    @Column(name = "client_id")
     private long clientId;
     private String name;
     private String email;
     private String password;
     private double balance;
 
-    @OneToMany(mappedBy="client",cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Portfolio> portfolios;
 
-    @OneToMany(mappedBy="client",cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ClientOrder> orders;
 
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -59,6 +60,14 @@ public class Client {
         this.email = email;
         this.password = password;
         this.balance = balance;
+    }
+
+    public Client(String name, String email, String password, double balance, List<Portfolio> portfolios) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.balance = balance;
+        this.portfolios = portfolios;
     }
 
     public long getClientId() {
@@ -99,6 +108,25 @@ public class Client {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public List<Portfolio> getPortfolios() {
+        return portfolios;
+    }
+
+    public void setPortfolios(List<Portfolio> portfolios) {
+        for(Portfolio portfolio: portfolios){
+            portfolio.setClient(this);
+        }
+        this.portfolios = portfolios;
+    }
+
+    public List<ClientOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<ClientOrder> orders) {
+        this.orders = orders;
     }
 
     public LocalDateTime getCreatedAt() {

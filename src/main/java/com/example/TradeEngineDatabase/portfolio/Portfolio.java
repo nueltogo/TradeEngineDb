@@ -1,6 +1,7 @@
 package com.example.TradeEngineDatabase.portfolio;
 
 import com.example.TradeEngineDatabase.client.Client;
+import com.example.TradeEngineDatabase.clientorder.ClientOrder;
 import com.example.TradeEngineDatabase.product.Product;
 
 import javax.persistence.*;
@@ -20,17 +21,20 @@ public class Portfolio {
             strategy = GenerationType.SEQUENCE,
             generator = "portfolio_sequence"
     )
+    @Column(name = "portfolio_Id")
     private long portfolioId;
     private String name;
-//    private long clientId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_Id")
+    @JoinColumn(name = "client_id")
     private Client client;
 
     // client can place orders to make portforlio
-    @OneToMany(mappedBy="portfolio",cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> products;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ClientOrder> clientOrders;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -38,9 +42,8 @@ public class Portfolio {
     public Portfolio() {
     }
 
-    public Portfolio(String name, int clientId) {
+    public Portfolio(String name) {
         this.name = name;
-//        this.clientId = clientId;
     }
 
     public long getPortfolioId() {
@@ -59,16 +62,16 @@ public class Portfolio {
         this.name = name;
     }
 
-//    public long getClientId() {
-//        return clientId;
-//    }
-//
-//    public void setClientId(int clientId) {
-//        this.clientId = clientId;
-//    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     @Override
@@ -76,7 +79,11 @@ public class Portfolio {
         return "Porftfolio{" +
                 "portfolioId=" + portfolioId +
                 ", name=" + name +
-//                ", clientId=" + clientId +
+                ", clientId=" + client.getClientId() +
                 '}';
     }
+
 }
+
+
+

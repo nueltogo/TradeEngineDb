@@ -1,8 +1,9 @@
 package com.example.TradeEngineDatabase.exchangeorder;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.example.TradeEngineDatabase.client.Client;
+import com.example.TradeEngineDatabase.clientorder.ClientOrder;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,8 +16,13 @@ public class ExchangeOrder {
     private Double price;
     private String side;
     private Integer exchange;
-    private long clientOrderId;
+//    private long clientOrderId;
     private String status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_Order_Id")
+    private ClientOrder clientorder;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public ExchangeOrder() {
@@ -33,7 +39,7 @@ public class ExchangeOrder {
         this.price = price;
         this.side = side;
         this.exchange = exchange;
-        this.clientOrderId = clientOrderId;
+//        this.clientOrderId = clientOrderId;
         this.status = status;
     }
 
@@ -85,13 +91,13 @@ public class ExchangeOrder {
         this.exchange = exchange;
     }
 
-    public long getClientOrderId() {
-        return clientOrderId;
-    }
-
-    public void setClientOrderId(long clientOrderId) {
-        this.clientOrderId = clientOrderId;
-    }
+//    public long getClientOrderId() {
+//        return clientOrderId;
+//    }
+//
+//    public void setClientOrderId(long clientOrderId) {
+//        this.clientOrderId = clientOrderId;
+//    }
 
     public String getStatus() {
         return status;
@@ -114,7 +120,7 @@ public class ExchangeOrder {
                 ", price=" + price +
                 ", side='" + side + '\'' +
                 ", exchange=" + exchange +
-                ", clientOrderId=" + clientOrderId +
+//                ", clientOrderId=" + clientOrderId +
                 ", status='" + status + '\'' +
                 ", createdAt=" + createdAt +
                 '}';
