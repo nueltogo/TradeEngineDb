@@ -1,7 +1,11 @@
 package com.example.TradeEngineDatabase.portfolio;
 
+import com.example.TradeEngineDatabase.client.Client;
+import com.example.TradeEngineDatabase.product.Product;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table
@@ -18,7 +22,16 @@ public class Portfolio {
     )
     private long portfolioId;
     private String name;
-    private long clientId;
+//    private long clientId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_Id")
+    private Client client;
+
+    // client can place orders to make portforlio
+    @OneToMany(mappedBy="portfolio",cascade = CascadeType.ALL)
+    private List<Product> products;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
 
@@ -27,7 +40,7 @@ public class Portfolio {
 
     public Portfolio(String name, int clientId) {
         this.name = name;
-        this.clientId = clientId;
+//        this.clientId = clientId;
     }
 
     public long getPortfolioId() {
@@ -46,13 +59,13 @@ public class Portfolio {
         this.name = name;
     }
 
-    public long getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
-    }
+//    public long getClientId() {
+//        return clientId;
+//    }
+//
+//    public void setClientId(int clientId) {
+//        this.clientId = clientId;
+//    }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -63,7 +76,7 @@ public class Portfolio {
         return "Porftfolio{" +
                 "portfolioId=" + portfolioId +
                 ", name=" + name +
-                ", clientId=" + clientId +
+//                ", clientId=" + clientId +
                 '}';
     }
 }

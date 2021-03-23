@@ -1,3 +1,4 @@
+/*
 package com.example.TradeEngineDatabase.clientorder;
 
 import com.example.TradeEngineDatabase.client.Client;
@@ -12,3 +13,4 @@ public interface ClientOrderRepository extends JpaRepository<ClientOrder, Long> 
     @Query("SELECT s FROM ClientOrder s WHERE s.id = ?1")
     Optional<ClientOrder> findClientOrderById(Long clientOrderId);
 }
+*/

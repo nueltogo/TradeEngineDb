@@ -1,3 +1,4 @@
+/*
 package com.example.TradeEngineDatabase.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,3 +51,4 @@ public class ClientController {
         clientService.updateClient(clientId, name, password, balance);
     }
 }
+*/

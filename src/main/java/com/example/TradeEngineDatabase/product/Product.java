@@ -1,5 +1,7 @@
 package com.example.TradeEngineDatabase.product;
 
+import com.example.TradeEngineDatabase.portfolio.Portfolio;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -18,10 +20,15 @@ public class Product {
     )
     private long productId;
     private String ticker;
-    private long portfolioId;
+//    private long portfolioId;
     private int quantity;
     private double lastTradedPrice;
     private String lastTradedSide;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "portfolioID")
+    private Portfolio portfolio;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public Product() {
@@ -33,7 +40,7 @@ public class Product {
 
     public Product(String ticker, long portfolioId, int quantity, double lastTradedPrice, String lastTradedSide) {
         this.ticker = ticker;
-        this.portfolioId = portfolioId;
+//        this.portfolioId = portfolioId;
         this.quantity = quantity;
         this.lastTradedPrice = lastTradedPrice;
         this.lastTradedSide = lastTradedSide;
@@ -55,13 +62,13 @@ public class Product {
         this.ticker = ticker;
     }
 
-    public long getPortfolioId() {
-        return portfolioId;
-    }
-
-    public void setPortfolioId(long portfolioId) {
-        this.portfolioId = portfolioId;
-    }
+//    public long getPortfolioId() {
+//        return portfolioId;
+//    }
+//
+//    public void setPortfolioId(long portfolioId) {
+//        this.portfolioId = portfolioId;
+//    }
 
     public int getQuantity() {
         return quantity;
@@ -97,7 +104,7 @@ public class Product {
         return "Product{" +
                 "productId=" + productId +
                 ", ticker='" + ticker + '\'' +
-                ", portfolioId=" + portfolioId +
+//                ", portfolioId=" + portfolioId +
                 ", quantity=" + quantity +
                 ", lastTradedPrice=" + lastTradedPrice +
                 ", lastTradedSide='" + lastTradedSide + '\'' +

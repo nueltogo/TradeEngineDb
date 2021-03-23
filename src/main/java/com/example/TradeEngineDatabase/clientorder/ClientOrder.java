@@ -1,5 +1,7 @@
 package com.example.TradeEngineDatabase.clientorder;
 
+import com.example.TradeEngineDatabase.client.Client;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -22,9 +24,14 @@ public class ClientOrder {
     private int quantity;
     private String side;
     private long portfolioId;
-    private long clientId;
+//    private long clientId;
     private String validationStatus;
     private String status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "clientID")
+    private Client client;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public ClientOrder() {
@@ -40,7 +47,7 @@ public class ClientOrder {
         this.quantity = quantity;
         this.side = side;
         this.portfolioId = portfolioId;
-        this.clientId = clientId;
+//        this.clientId = clientId;
         this.validationStatus = validationStatus;
         this.status = status;
     }
@@ -90,13 +97,13 @@ public class ClientOrder {
         this.portfolioId = portfolioId;
     }
 
-    public long getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
-    }
+//    public long getClientId() {
+//        return clientId;
+//    }
+//
+//    public void setClientId(int clientId) {
+//        this.clientId = clientId;
+//    }
 
     public String getValidationStatus() {
         return validationStatus;
@@ -128,7 +135,7 @@ public class ClientOrder {
                 ", quantity=" + quantity +
                 ", side='" + side + '\'' +
                 ", portfolioId=" + portfolioId +
-                ", clientId=" + clientId +
+//                ", clientId=" + clientId +
                 ", validationStatus='" + validationStatus + '\'' +
                 ", status='" + status + '\'' +
                 ", createdAt=" + createdAt +

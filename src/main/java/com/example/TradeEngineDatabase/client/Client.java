@@ -1,7 +1,11 @@
 package com.example.TradeEngineDatabase.client;
 
+import com.example.TradeEngineDatabase.clientorder.ClientOrder;
+import com.example.TradeEngineDatabase.portfolio.Portfolio;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table
@@ -21,6 +25,13 @@ public class Client {
     private String email;
     private String password;
     private double balance;
+
+    @OneToMany(mappedBy="client",cascade = CascadeType.ALL)
+    private List<Portfolio> portfolios;
+
+    @OneToMany(mappedBy="client",cascade = CascadeType.ALL)
+    private List<ClientOrder> orders;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public Client() {
