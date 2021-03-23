@@ -20,6 +20,13 @@ public class Report {
         this.message = message;
     }
 
+    public Report(Long id, String message) {
+        this.id = id;
+        this.message = message;
+    }
+
+
+
     public Long getId() {
         return id;
     }
