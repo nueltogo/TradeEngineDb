@@ -21,8 +21,8 @@ public class ClientOrder {
     private double price;
     private int quantity;
     private String side;
-    private int portfolioId;
-    private int clientId;
+    private long portfolioId;
+    private long clientId;
     private String validationStatus;
     private String status;
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -82,7 +82,7 @@ public class ClientOrder {
         this.side = side;
     }
 
-    public int getPortfolioId() {
+    public long getPortfolioId() {
         return portfolioId;
     }
 
@@ -90,7 +90,7 @@ public class ClientOrder {
         this.portfolioId = portfolioId;
     }
 
-    public int getClientId() {
+    public long getClientId() {
         return clientId;
     }
 

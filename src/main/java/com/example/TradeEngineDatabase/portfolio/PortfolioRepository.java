@@ -14,5 +14,5 @@ public interface PortfolioRepository extends JpaRepository<Portfolio, Long> {
     Optional<Portfolio> findPortfolioById(Long portfolioId);
 
     @Query("SELECT s FROM Portfolio s WHERE s.name = :name AND s.clientId = :clientId")
-    Optional<Portfolio> findPortfolioByClientIdAndName(String name, int clientId);
+    Optional<Portfolio> findPortfolioByClientIdAndName(String name, long clientId);
 }

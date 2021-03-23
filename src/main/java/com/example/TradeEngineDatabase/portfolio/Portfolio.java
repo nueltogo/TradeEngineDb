@@ -18,7 +18,7 @@ public class Portfolio {
     )
     private long portfolioId;
     private String name;
-    private int clientId;
+    private long clientId;
     private LocalDateTime createdAt = LocalDateTime.now();
 
 
@@ -46,7 +46,7 @@ public class Portfolio {
         this.name = name;
     }
 
-    public int getClientId() {
+    public long getClientId() {
         return clientId;
     }
 

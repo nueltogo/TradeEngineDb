@@ -20,7 +20,6 @@ public class Admin {
             generator = "admin_sequence"
     )
 
-
     @Column(nullable = false,updatable = false)
     private Long id;
     @Column(nullable = false)

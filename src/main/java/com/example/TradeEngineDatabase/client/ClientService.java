@@ -20,9 +20,9 @@ public class ClientService {
     }
 
     public void addNewClient(Client client) {
-        Optional<Client> clientOptional = clientRepository.findClientById(client.getClientId());
+        Optional<Client> clientOptional = clientRepository.findClientByEmail(client.getEmail());
         if(clientOptional.isPresent()){
-            throw new IllegalStateException("Id already taken.");
+            throw new IllegalStateException("Email already taken.");
         }
         clientRepository.save(client);
     }

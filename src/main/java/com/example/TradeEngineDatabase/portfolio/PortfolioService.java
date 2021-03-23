@@ -27,7 +27,7 @@ public class PortfolioService {
         return portfolioRepository.findAll();
     }
 
-    public Portfolio getPortfolio(String name, int clientId) {
+    public Portfolio getPortfolio(String name, long clientId) {
         Optional<Portfolio> portfolioOptional = portfolioRepository.findPortfolioByClientIdAndName(name,clientId);
         if(portfolioOptional.isPresent()){
             return  portfolioOptional.get();
