@@ -1,6 +1,9 @@
 package com.example.TradeEngineDatabase.report;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +20,9 @@ public class ReportService {
 
     public List<Report> getAllReports(){
 
-        return reportRepository.findAll();
+        Pageable paging = PageRequest.of(1, 200, Sort.by("createdAt").descending());
+
+        return reportRepository.findAll(paging).getContent();
     }
 
     public Report getReportById(Long id) throws Exception {
