@@ -13,6 +13,13 @@ public class Report {
     private String message;
     private LocalDateTime createdAt=LocalDateTime.now();
 
+    public Report() {
+    }
+
+    public Report(String message) {
+        this.message = message;
+    }
+
     public Long getId() {
         return id;
     }
