@@ -1,27 +1,45 @@
 package com.example.TradeEngineDatabase.client;
+import com.example.TradeEngineDatabase.clientorder.*;
+
+import com.example.TradeEngineDatabase.portfolio.Portfolio;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table
 public class Client {
     @Id
-    @SequenceGenerator(
+/*    @SequenceGenerator(
             name = "client_sequence",
             sequenceName = "client_sequence",
             allocationSize = 1
-    )
+    )*/
     @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "client_sequence"
+            strategy = GenerationType.SEQUENCE
+            //generator = "client_sequence"
     )
+    @Column()
     private long clientId;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false,unique = true)
     private String email;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private double balance;
+    @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @OneToMany(mappedBy="client",cascade = CascadeType.ALL)
+    private List<Portfolio> portfolios;
+
+    @OneToMany(mappedBy="client",cascade = CascadeType.ALL)
+    private List<ClientOrder> orders;
 
     public Client() {
     }

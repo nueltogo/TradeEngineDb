@@ -1,5 +1,7 @@
 package com.example.TradeEngineDatabase.clientorder;
 
+import com.example.TradeEngineDatabase.client.Client;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -7,30 +9,44 @@ import java.time.LocalDateTime;
 @Table
 public class ClientOrder {
     @Id
-    @SequenceGenerator(
+/*    @SequenceGenerator(
             name = "clientOrder_sequence",
             sequenceName = "clientOrder_sequence",
             allocationSize = 1
-    )
+    )*/
     @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "clientOrder_sequence"
+            strategy = GenerationType.SEQUENCE
+            //generator = "clientOrder_sequence"
     )
     private long clientOrderId;
+    @Column(nullable = false)
     private String product;
+    @Column(nullable = false, updatable = false)
     private double price;
+    @Column(nullable = false, updatable = false)
     private int quantity;
+    @Column(nullable = false)
     private String side;
+    @Column(nullable = false, updatable = false)
     private int portfolioId;
-    private int clientId;
+
+    //private int clientId;
+    @Column()
     private String validationStatus;
+    @Column()
     private String status;
+    @Column()
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "clientID")
+    private Client clientId;
 
     public ClientOrder() {
     }
 
     public ClientOrder(long clientOrderId) {
+
         this.clientOrderId = clientOrderId;
     }
 
@@ -40,7 +56,7 @@ public class ClientOrder {
         this.quantity = quantity;
         this.side = side;
         this.portfolioId = portfolioId;
-        this.clientId = clientId;
+        //this.clientId = clientId;
         this.validationStatus = validationStatus;
         this.status = status;
     }
@@ -90,14 +106,14 @@ public class ClientOrder {
         this.portfolioId = portfolioId;
     }
 
-    public int getClientId() {
+    /*public int getClientId() {
         return clientId;
     }
 
     public void setClientId(int clientId) {
         this.clientId = clientId;
     }
-
+*/
     public String getValidationStatus() {
         return validationStatus;
     }
