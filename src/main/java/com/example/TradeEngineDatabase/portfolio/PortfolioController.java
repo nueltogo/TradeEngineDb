@@ -1,7 +1,5 @@
 package com.example.TradeEngineDatabase.portfolio;
 
-import com.example.TradeEngineDatabase.client.Client;
-import com.example.TradeEngineDatabase.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +19,10 @@ public class PortfolioController {
         return portfolioService.getPortfolios();
     }
 
-//    @PostMapping("/get")
-//    public Portfolio getPortfolio(@RequestBody Portfolio portfolio) throws IllegalStateException {
-//        return portfolioService.getPortfolio(portfolio.getName(),portfolio.getClientId());
-//    }
+    @PostMapping("/get")
+    public Portfolio getPortfolio(@RequestBody Portfolio portfolio) throws IllegalStateException {
+        return portfolioService.getPortfolio(portfolio.getName(),portfolio.getClientId());
+    }
 
     @PostMapping("/new")
     public void addNewPortfolio(@RequestBody Portfolio portfolio) throws IllegalStateException {

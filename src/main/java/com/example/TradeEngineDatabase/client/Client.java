@@ -2,13 +2,18 @@ package com.example.TradeEngineDatabase.client;
 
 import com.example.TradeEngineDatabase.clientorder.ClientOrder;
 import com.example.TradeEngineDatabase.portfolio.Portfolio;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property  = "clientId",
+        scope     = Long.class)
 public class Client {
     @Id
     @SequenceGenerator(
@@ -27,11 +32,13 @@ public class Client {
     private String password;
     private double balance;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Portfolio> portfolios;
+    @JsonIdentityReference(alwaysAsId = true)
+    @OneToMany(targetEntity = Portfolio.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Portfolio> portfolios =  new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ClientOrder> orders;
+    @JsonIdentityReference(alwaysAsId = true)
+    @OneToMany(targetEntity = ClientOrder.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ClientOrder> orders = new ArrayList<>();
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -74,7 +81,7 @@ public class Client {
         return clientId;
     }
 
-    public void setClientId(int clientId) {
+    public void setClientId(long clientId) {
         this.clientId = clientId;
     }
 
@@ -114,19 +121,16 @@ public class Client {
         return portfolios;
     }
 
-    public void setPortfolios(List<Portfolio> portfolios) {
-        for(Portfolio portfolio: portfolios){
-            portfolio.setClient(this);
-        }
-        this.portfolios = portfolios;
+    public void setPortfolios(Portfolio portfolio) {
+        portfolios.add(portfolio);
     }
 
     public List<ClientOrder> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<ClientOrder> orders) {
-        this.orders = orders;
+    public void setOrders(ClientOrder order) {
+        orders.add(order);
     }
 
     public LocalDateTime getCreatedAt() {

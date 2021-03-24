@@ -3,13 +3,18 @@ package com.example.TradeEngineDatabase.clientorder;
 import com.example.TradeEngineDatabase.client.Client;
 import com.example.TradeEngineDatabase.exchangeorder.ExchangeOrder;
 import com.example.TradeEngineDatabase.portfolio.Portfolio;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property  = "clientOrderId",
+        scope     = Long.class)
 public class ClientOrder {
     @Id
     @SequenceGenerator(
@@ -21,6 +26,7 @@ public class ClientOrder {
             strategy = GenerationType.SEQUENCE,
             generator = "clientOrder_sequence"
     )
+    @Column(name = "client_Order_Id")
     private long clientOrderId;
     private String product;
     private double price;
@@ -29,16 +35,29 @@ public class ClientOrder {
     private String validationStatus;
     private String status;
 
+    @Transient
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private long clientId;
+
+    @Transient
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private long portfolioId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "portfolio_id")
+    @JoinColumn(name = "portfolio_Id")
+    @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
+    @JsonIdentityReference(alwaysAsId = true)
     private Portfolio portfolio;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
+    @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
+    @JsonIdentityReference(alwaysAsId = true)
     private Client client;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ExchangeOrder> orders;
+    @OneToMany(targetEntity = ExchangeOrder.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIdentityReference(alwaysAsId = true)
+    private List<ExchangeOrder> orders = new ArrayList<>();
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -58,9 +77,23 @@ public class ClientOrder {
         this.status = status;
     }
 
+    public ClientOrder(String product, double price, int quantity, String side, String validationStatus, String status, long clientId, long portfolioId) {
+        this.product = product;
+        this.price = price;
+        this.quantity = quantity;
+        this.side = side;
+        this.validationStatus = validationStatus;
+        this.status = status;
+        this.clientId = clientId;
+        this.portfolioId = portfolioId;
+    }
 
     public long getClientOrderId() {
         return clientOrderId;
+    }
+
+    public void setClientOrderId(long clientOrderId) {
+        this.clientOrderId = clientOrderId;
     }
 
     public String getProduct() {
@@ -111,10 +144,53 @@ public class ClientOrder {
         this.status = status;
     }
 
+    public long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
+    }
+
+    public long getPortfolioId() {
+        return portfolioId;
+    }
+
+    public void setPortfolioId(long portfolioId) {
+        this.portfolioId = portfolioId;
+    }
+
+    public Portfolio getPortfolio() {
+        return portfolio;
+    }
+
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public List<ExchangeOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(ExchangeOrder order) {
+        orders.add(order);
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 
     @Override
     public String toString() {

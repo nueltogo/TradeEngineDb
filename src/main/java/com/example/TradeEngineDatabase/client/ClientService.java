@@ -28,6 +28,7 @@ public class ClientService {
             throw new IllegalStateException("Email already taken.");
         }
         clientRepository.save(client);
+        client.getPortfolios().get(0).setClient(client);
         portfolioRepository.save(client.getPortfolios().get(0));
     }
 

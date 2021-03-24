@@ -1,5 +1,7 @@
 package com.example.TradeEngineDatabase.portfolio;
 
+import com.example.TradeEngineDatabase.client.Client;
+import com.example.TradeEngineDatabase.client.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,13 +11,19 @@ import java.util.Optional;
 @Service
 public class PortfolioService {
     private final PortfolioRepository portfolioRepository;
+    private final ClientRepository clientRepository;
 
     @Autowired
-    public PortfolioService(PortfolioRepository portfolioRepository) {
+    public PortfolioService(PortfolioRepository portfolioRepository, ClientRepository clientRepository) {
         this.portfolioRepository = portfolioRepository;
+        this.clientRepository = clientRepository;
     }
 
     public void addNewPortfolio(Portfolio portfolio) {
+        Long id = portfolio.getClientId();
+        Client client = clientRepository.getOne(id);
+        portfolio.setClient(client);
+        client.setPortfolios(portfolio);
         Optional<Portfolio> portfolioOptional = portfolioRepository.findPortfolioById(portfolio.getPortfolioId());
         if(portfolioOptional.isPresent()){
             throw new IllegalStateException("Id already taken.");
@@ -27,13 +35,13 @@ public class PortfolioService {
         return portfolioRepository.findAll();
     }
 
-//    public Portfolio getPortfolio(String name, long clientId) {
-//        Optional<Portfolio> portfolioOptional = portfolioRepository.findPortfolioByClientIdAndName(name,clientId);
-//        if(portfolioOptional.isPresent()){
-//            return  portfolioOptional.get();
-//        }
-//        throw new IllegalStateException("Portfolio does not exist");
-//    }
+    public Portfolio getPortfolio(String name, long clientId) {
+        Optional<Portfolio> portfolioOptional = portfolioRepository.findByClient_ClientIdAndName(clientId, name);
+        if(portfolioOptional.isPresent()){
+            return  portfolioOptional.get();
+        }
+        throw new IllegalStateException("Portfolio does not exist");
+    }
 
     public void deletePortfolio(Long portfolioId) {
         boolean exists = portfolioRepository.existsById(portfolioId);

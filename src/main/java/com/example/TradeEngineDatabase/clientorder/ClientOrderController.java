@@ -1,4 +1,3 @@
-/*
 package com.example.TradeEngineDatabase.clientorder;
 
 import com.example.TradeEngineDatabase.client.Client;
@@ -20,6 +19,16 @@ public class ClientOrderController {
     @GetMapping("/all")
     public List<ClientOrder> getClientOrders() {
         return clientOrderService.getClientOrders();
+    }
+
+    @GetMapping("/clientid/{id}")
+    public List<ClientOrder> getByClient(@PathVariable("id") long id) {
+        return clientOrderService.getByClient(id);
+    }
+
+    @GetMapping("/portfolioid/{id}")
+    public List<ClientOrder> getByPortfolio(@PathVariable("id") long id) {
+        return clientOrderService.getByPortfolio(id);
     }
 
     @PostMapping("/get")
@@ -46,4 +55,3 @@ public class ClientOrderController {
         clientOrderService.updateClientOrder(clientOrderId, price, quantity);
     }
 }
-*/
