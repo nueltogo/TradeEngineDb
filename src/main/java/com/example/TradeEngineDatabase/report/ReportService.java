@@ -1,13 +1,8 @@
 package com.example.TradeEngineDatabase.report;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,13 +17,10 @@ public class ReportService {
     }
 
     public List<Report> getAllReports(){
-//        Pageable paging = PageRequest.of(1, 100, Sort.by("id").descending());
 
-        //        List<Report> reports = reportRepository.findAll();
-//        Collections.reverse(reports);
-
-        return reportRepository.findAll(Sort.by("id").descending());
-
+        List<Report> reports = reportRepository.findAll();
+        Collections.reverse(reports);
+        return reports;
     }
 
     public Report getReportById(Long id) throws Exception {
