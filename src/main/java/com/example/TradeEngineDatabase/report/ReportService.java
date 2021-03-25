@@ -22,16 +22,12 @@ public class ReportService {
     }
 
     public List<Report> getAllReports(){
-        Pageable paging = PageRequest.of(1, 100, Sort.by("id").descending());
+//        Pageable paging = PageRequest.of(1, 100, Sort.by("id").descending());
 
-        Page<Report> pagedResult = reportRepository.findAll(paging);
-//        List<Report> reports = reportRepository.findAll();
+        //        List<Report> reports = reportRepository.findAll();
 //        Collections.reverse(reports);
-        if(pagedResult.hasContent()) {
-            return pagedResult.getContent();
-        } else {
-            return new ArrayList<>();
-        }
+
+        return reportRepository.findAll(Sort.by("id").descending());
 
     }
 
