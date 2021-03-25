@@ -21,6 +21,16 @@ public class ClientOrderController {
         return clientOrderService.getClientOrders();
     }
 
+    @GetMapping("/clientid/{id}")
+    public List<ClientOrder> getByClient(@PathVariable("id") long id) {
+        return clientOrderService.getByClient(id);
+    }
+
+    @GetMapping("/portfolioid/{id}")
+    public List<ClientOrder> getByPortfolio(@PathVariable("id") long id) {
+        return clientOrderService.getByPortfolio(id);
+    }
+
     @PostMapping("/get")
     public ClientOrder getClientOrder(@RequestBody ClientOrder clientOrder) throws IllegalStateException {
         return clientOrderService.getClientOrder(clientOrder);

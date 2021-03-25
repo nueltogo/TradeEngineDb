@@ -1,5 +1,6 @@
 package com.example.TradeEngineDatabase.product;
 
+import com.example.TradeEngineDatabase.clientorder.ClientOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,6 +11,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT s FROM Product s WHERE s.id = ?1")
     Optional<Product> findProductById(Long productId);
 
-    @Query("SELECT s FROM Product s WHERE s.portfolioId = :portfolioId")
-    Optional<List<Product>> findProductByPortfolio(Long portfolioId);
+    Optional<List<Product>> findByPortfolio_PortfolioId(long portfolioId);
 }

@@ -19,6 +19,11 @@ public class ExchangeOrderController {
         return exchangeOrderService.getExchangeOrders();
     }
 
+    @GetMapping("/clientorderid/{id}")
+    public List<ExchangeOrder> getByClientOrder(@PathVariable("id") long id) throws IllegalStateException {
+        return exchangeOrderService.getByClientOrder(id);
+    }
+
     @PostMapping("/get")
     public ExchangeOrder getExchangeOrder(@RequestBody ExchangeOrder exchangeOrder) throws IllegalStateException {
         return exchangeOrderService.getExchangeOrder(exchangeOrder);

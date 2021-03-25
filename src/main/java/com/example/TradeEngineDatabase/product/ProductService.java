@@ -1,5 +1,7 @@
 package com.example.TradeEngineDatabase.product;
 
+import com.example.TradeEngineDatabase.portfolio.Portfolio;
+import com.example.TradeEngineDatabase.portfolio.PortfolioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,13 +13,20 @@ import java.util.Optional;
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
+    private final PortfolioRepository portfolioRepository;
 
     @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository,
+                          PortfolioRepository portfolioRepository) {
         this.productRepository = productRepository;
+        this.portfolioRepository = portfolioRepository;
     }
 
     public void addNewProduct(Product product) {
+        long portfolioId = product.getPortfolioId();
+        Portfolio portfolio = portfolioRepository.getOne(portfolioId);
+        product.setPortfolio(portfolio);
+        portfolio.setProducts(product);
         Optional<Product> productOptional = productRepository.findProductById(product.getProductId());
         if(productOptional.isPresent()){
             throw new IllegalStateException("Id already taken.");
@@ -38,7 +47,7 @@ public class ProductService {
     }
 
     public List<Product> getProductsInPortfolio(long portfolioId){
-        Optional<List<Product>> optionalProducts = productRepository.findProductByPortfolio(portfolioId);
+        Optional<List<Product>> optionalProducts = productRepository.findByPortfolio_PortfolioId(portfolioId);
         if(optionalProducts.isPresent()){
             return optionalProducts.get();
         }

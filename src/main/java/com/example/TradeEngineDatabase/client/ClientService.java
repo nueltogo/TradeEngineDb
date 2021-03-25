@@ -1,5 +1,6 @@
 package com.example.TradeEngineDatabase.client;
 
+import com.example.TradeEngineDatabase.portfolio.PortfolioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,10 +14,12 @@ import java.util.stream.Collectors;
 public class ClientService {
 
     private final ClientRepository clientRepository;
+    private final PortfolioRepository portfolioRepository;
 
     @Autowired
-    public ClientService(ClientRepository clientRepository) {
+    public ClientService(ClientRepository clientRepository, PortfolioRepository portfolioRepository) {
         this.clientRepository = clientRepository;
+        this.portfolioRepository = portfolioRepository;
     }
 
     public void addNewClient(Client client) {
@@ -25,6 +28,8 @@ public class ClientService {
             throw new IllegalStateException("Email already taken.");
         }
         clientRepository.save(client);
+        client.getPortfolios().get(0).setClient(client);
+        portfolioRepository.save(client.getPortfolios().get(0));
     }
 
     public List<Client> getClients(){

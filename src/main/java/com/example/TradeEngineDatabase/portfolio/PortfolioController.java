@@ -1,7 +1,5 @@
 package com.example.TradeEngineDatabase.portfolio;
 
-import com.example.TradeEngineDatabase.client.Client;
-import com.example.TradeEngineDatabase.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

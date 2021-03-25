@@ -13,6 +13,6 @@ public interface PortfolioRepository extends JpaRepository<Portfolio, Long> {
     @Query("SELECT s FROM Portfolio s WHERE s.id = ?1")
     Optional<Portfolio> findPortfolioById(Long portfolioId);
 
-    @Query("SELECT s FROM Portfolio s WHERE s.name = :name AND s.clientId = :clientId")
-    Optional<Portfolio> findPortfolioByClientIdAndName(String name, long clientId);
+    //@Query("SELECT s FROM Portfolio s WHERE s.name = :name AND s.client = :clientId")
+    Optional<Portfolio> findByClient_ClientIdAndName(long client, String name);
 }

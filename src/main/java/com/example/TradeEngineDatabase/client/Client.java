@@ -1,10 +1,19 @@
 package com.example.TradeEngineDatabase.client;
 
+import com.example.TradeEngineDatabase.clientorder.ClientOrder;
+import com.example.TradeEngineDatabase.portfolio.Portfolio;
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property  = "clientId",
+        scope     = Long.class)
 public class Client {
     @Id
     @SequenceGenerator(
@@ -16,11 +25,21 @@ public class Client {
             strategy = GenerationType.SEQUENCE,
             generator = "client_sequence"
     )
+    @Column(name = "client_id")
     private long clientId;
     private String name;
     private String email;
     private String password;
     private double balance;
+
+    @JsonIdentityReference(alwaysAsId = true)
+    @OneToMany(targetEntity = Portfolio.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Portfolio> portfolios =  new ArrayList<>();
+
+    @JsonIdentityReference(alwaysAsId = true)
+    @OneToMany(targetEntity = ClientOrder.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ClientOrder> orders = new ArrayList<>();
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public Client() {
@@ -50,11 +69,19 @@ public class Client {
         this.balance = balance;
     }
 
+    public Client(String name, String email, String password, double balance, List<Portfolio> portfolios) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.balance = balance;
+        this.portfolios = portfolios;
+    }
+
     public long getClientId() {
         return clientId;
     }
 
-    public void setClientId(int clientId) {
+    public void setClientId(long clientId) {
         this.clientId = clientId;
     }
 
@@ -88,6 +115,22 @@ public class Client {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public List<Portfolio> getPortfolios() {
+        return portfolios;
+    }
+
+    public void setPortfolios(Portfolio portfolio) {
+        portfolios.add(portfolio);
+    }
+
+    public List<ClientOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(ClientOrder order) {
+        orders.add(order);
     }
 
     public LocalDateTime getCreatedAt() {
