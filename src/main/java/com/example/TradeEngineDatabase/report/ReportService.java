@@ -22,7 +22,7 @@ public class ReportService {
     }
 
     public List<Report> getAllReports(){
-        Pageable paging = PageRequest.of(1, 100, Sort.by("createdAt").descending());
+        Pageable paging = PageRequest.of(1, 100, Sort.by("id").descending());
 
         Page<Report> pagedResult = reportRepository.findAll(paging);
 //        List<Report> reports = reportRepository.findAll();
