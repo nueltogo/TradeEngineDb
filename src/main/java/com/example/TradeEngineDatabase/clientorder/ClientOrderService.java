@@ -42,7 +42,7 @@ public class ClientOrderService {
             throw new IllegalStateException("Id already taken.");
         }
         ClientOrder clientOrder1 = clientOrderRepository.save(clientOrder);
-        clientRepository.flush();
+        clientOrderRepository.flush();
         return clientOrder1;
     }
 
