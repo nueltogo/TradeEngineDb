@@ -3,6 +3,7 @@ package com.example.TradeEngineDatabase.report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -17,7 +18,9 @@ public class ReportService {
 
     public List<Report> getAllReports(){
 
-        return reportRepository.findAll();
+        List<Report> reports = reportRepository.findAll();
+        Collections.reverse(reports);
+        return reports;
     }
 
     public Report getReportById(Long id) throws Exception {
