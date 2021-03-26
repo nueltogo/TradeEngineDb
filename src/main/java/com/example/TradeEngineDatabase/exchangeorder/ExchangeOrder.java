@@ -1,9 +1,7 @@
 package com.example.TradeEngineDatabase.exchangeorder;
 
-import com.example.TradeEngineDatabase.client.Client;
 import com.example.TradeEngineDatabase.clientorder.ClientOrder;
 import com.fasterxml.jackson.annotation.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -129,7 +127,12 @@ public class ExchangeOrder {
     }
 
     public long getClientOrderId() {
-        return clientOrderId;
+        if(this.clientOrderId==0) {
+            return this.clientorder.getClientOrderId();
+        }
+        else{
+            return this.clientOrderId;
+        }
     }
 
     public void setClientOrderId(long clientOrderId) {

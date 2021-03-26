@@ -96,7 +96,12 @@ public class Product {
     }
 
     public long getPortfolioId() {
-        return portfolioId;
+        if(this.portfolioId==0) {
+            return this.portfolio.getPortfolioId();
+        }
+        else{
+            return this.portfolioId;
+        }
     }
 
     public void setPortfolioId(long portfolioId) {

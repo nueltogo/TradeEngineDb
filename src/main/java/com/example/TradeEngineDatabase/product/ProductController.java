@@ -43,11 +43,8 @@ public class ProductController {
 
     @PutMapping("/update/{productId}")
     public void updateProduct(
-            @PathVariable("productId") Long productId,
-            @RequestParam(required = false) Integer quantity,
-            @RequestParam(required = false) Double lastTradedPrice,
-            @RequestParam(required = false) String lastTradedSide
+            @PathVariable("productId") Long productId, @RequestBody Product product
     ) throws IllegalStateException {
-        productService.updateProduct(productId,quantity,lastTradedPrice,lastTradedSide);
+        productService.updateProduct(productId,product.getQuantity(),product.getLastTradedPrice(),product.getLastTradedSide());
     }
 }

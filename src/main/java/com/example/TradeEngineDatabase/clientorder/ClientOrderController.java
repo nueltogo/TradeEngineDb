@@ -1,7 +1,5 @@
 package com.example.TradeEngineDatabase.clientorder;
 
-import com.example.TradeEngineDatabase.client.Client;
-import com.example.TradeEngineDatabase.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,14 +29,25 @@ public class ClientOrderController {
         return clientOrderService.getByPortfolio(id);
     }
 
+    @GetMapping("/status/{status}")
+    public List<ClientOrder> getByPortfolio(@PathVariable("status") String status) {
+        return clientOrderService.getByStatus(status);
+    }
+
+    @GetMapping("/status/{clientId}/{status}")
+    public List<ClientOrder> getByPortfolio(@PathVariable("status") String status,
+                                            @PathVariable("clientId") long clientId) {
+        return clientOrderService.getByStatusAndClientId(clientId,status);
+    }
+
     @PostMapping("/get")
     public ClientOrder getClientOrder(@RequestBody ClientOrder clientOrder) throws IllegalStateException {
         return clientOrderService.getClientOrder(clientOrder);
     }
 
     @PostMapping("/new")
-    public void registerNewClientOrder(@RequestBody ClientOrder clientOrder) throws IllegalStateException {
-        clientOrderService.addNewClientOrder(clientOrder);
+    public ClientOrder registerNewClientOrder(@RequestBody ClientOrder clientOrder) throws IllegalStateException {
+        return clientOrderService.addNewClientOrder(clientOrder);
     }
 
     @DeleteMapping("/delete/{clientOrderId}")
@@ -53,5 +62,10 @@ public class ClientOrderController {
             @RequestParam(required = false) Integer quantity
     ) throws IllegalStateException {
         clientOrderService.updateClientOrder(clientOrderId, price, quantity);
+    }
+
+    @GetMapping("/cancel/{clientOrderId}")
+    public String cancelClientOrder(@PathVariable("clientOrderId") Long clientOrderId) throws IllegalStateException {
+        return clientOrderService.cancelClientOrder(clientOrderId);
     }
 }

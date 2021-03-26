@@ -1,6 +1,5 @@
 package com.example.TradeEngineDatabase.clientorder;
 
-import com.example.TradeEngineDatabase.client.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,4 +15,8 @@ public interface ClientOrderRepository extends JpaRepository<ClientOrder, Long> 
     Optional<List<ClientOrder>> findByClient_ClientId(long clientId);
 
     Optional<List<ClientOrder>> findByPortfolio_PortfolioId(long portfolioId);
+
+    Optional<List<ClientOrder>> findByStatus(String status);
+
+    Optional<List<ClientOrder>> findByClient_ClientIdAndStatus(long clientId, String Status);
 }

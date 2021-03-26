@@ -43,6 +43,14 @@ public class PortfolioService {
         throw new IllegalStateException("Portfolio does not exist");
     }
 
+    public List<Portfolio> getPortfolioById(long clientId){
+        Optional<List<Portfolio>> portfolioOptional = portfolioRepository.findByClient_ClientId(clientId);
+        if(portfolioOptional.isPresent()){
+            return  portfolioOptional.get();
+        }
+        throw new IllegalStateException("id does not exist");
+    }
+
     public void deletePortfolio(Long portfolioId) {
         boolean exists = portfolioRepository.existsById(portfolioId);
         if(!exists){

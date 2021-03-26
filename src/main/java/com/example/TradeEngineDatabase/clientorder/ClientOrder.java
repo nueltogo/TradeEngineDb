@@ -145,7 +145,12 @@ public class ClientOrder {
     }
 
     public long getClientId() {
-        return clientId;
+        if(this.clientId==0) {
+            return this.getClient().getClientId();
+        }
+        else{
+            return this.clientId;
+        }
     }
 
     public void setClientId(long clientId) {
@@ -153,7 +158,12 @@ public class ClientOrder {
     }
 
     public long getPortfolioId() {
-        return portfolioId;
+        if(this.portfolioId==0) {
+            return this.portfolio.getPortfolioId();
+        }
+        else{
+            return this.portfolioId;
+        }
     }
 
     public void setPortfolioId(long portfolioId) {
