@@ -28,7 +28,7 @@ public class ClientOrderService {
         this.portfolioRepository = portfolioRepository;
     }
 
-    public void addNewClientOrder(ClientOrder clientOrder) {
+    public ClientOrder addNewClientOrder(ClientOrder clientOrder) {
         long clientId = clientOrder.getClientId();
         Client client = clientRepository.getOne(clientId);
         long porfolioId = clientOrder.getPortfolioId();
@@ -38,44 +38,60 @@ public class ClientOrderService {
         clientOrder.setPortfolio(portfolio);
         portfolio.setClientOrders(clientOrder);
         Optional<ClientOrder> clientOrderOptional = clientOrderRepository.findClientOrderById(clientOrder.getClientOrderId());
-        if(clientOrderOptional.isPresent()){
+        if (clientOrderOptional.isPresent()) {
             throw new IllegalStateException("Id already taken.");
         }
-        clientOrderRepository.save(clientOrder);
+        return clientOrderRepository.save(clientOrder);
     }
 
-    public List<ClientOrder> getClientOrders(){
+    public List<ClientOrder> getClientOrders() {
         return clientOrderRepository.findAll();
     }
 
-    public ClientOrder getClientOrder(ClientOrder clientOrder){
+    public ClientOrder getClientOrder(ClientOrder clientOrder) {
         Optional<ClientOrder> clientOrderOptional = clientOrderRepository.findClientOrderById(clientOrder.getClientOrderId());
-        if(clientOrderOptional.isPresent()){
+        if (clientOrderOptional.isPresent()) {
             return clientOrderOptional.get();
         }
-        throw new IllegalStateException("Client Order with id "+clientOrder.getClientOrderId()+" does not exist");
+        throw new IllegalStateException("Client Order with id " + clientOrder.getClientOrderId() + " does not exist");
     }
 
-    public List<ClientOrder> getByClient(long clientId){
+    public List<ClientOrder> getByClient(long clientId) {
         Optional<List<ClientOrder>> clientOrderOptional = clientOrderRepository.findByClient_ClientId(clientId);
-        if(clientOrderOptional.isPresent()){
+        if (clientOrderOptional.isPresent()) {
             return clientOrderOptional.get();
         }
-        throw new IllegalStateException("Client Order with  client id "+clientId+" does not exist");
+        throw new IllegalStateException("Client Order with  client id " + clientId + " does not exist");
     }
 
-    public List<ClientOrder> getByPortfolio(long portfolioId){
+    public List<ClientOrder> getByPortfolio(long portfolioId) {
         Optional<List<ClientOrder>> clientOrderOptional = clientOrderRepository.findByPortfolio_PortfolioId(portfolioId);
-        if(clientOrderOptional.isPresent()){
+        if (clientOrderOptional.isPresent()) {
             return clientOrderOptional.get();
         }
-        throw new IllegalStateException("Client Order with  client id "+portfolioId+" does not exist");
+        throw new IllegalStateException("Client Order with  client id " + portfolioId + " does not exist");
+    }
+
+    public List<ClientOrder> getByStatus(String status) {
+        Optional<List<ClientOrder>> clientOrderOptional = clientOrderRepository.findByStatus(status);
+        if (clientOrderOptional.isPresent()) {
+            return clientOrderOptional.get();
+        }
+        throw new IllegalStateException("Client Order with  status " + status + " does not exist");
+    }
+
+    public List<ClientOrder> getByStatusAndClientId(long clientid, String status) {
+        Optional<List<ClientOrder>> clientOrderOptional = clientOrderRepository.findByClient_ClientIdAndStatus(clientid, status);
+        if (clientOrderOptional.isPresent()) {
+            return clientOrderOptional.get();
+        }
+        throw new IllegalStateException("Client Order with  status " + status + " does not exist");
     }
 
     public void deleteClientOrder(Long clientOrderId) {
         boolean exists = clientOrderRepository.existsById(clientOrderId);
-        if(!exists){
-            throw new IllegalStateException("ClientOrder with id: "+clientOrderId+" does not exist.");
+        if (!exists) {
+            throw new IllegalStateException("ClientOrder with id: " + clientOrderId + " does not exist.");
         }
         clientOrderRepository.deleteById(clientOrderId);
     }
@@ -84,14 +100,30 @@ public class ClientOrderService {
     public void updateClientOrder(Long clientOrderId, Double price, Integer quantity) {
         ClientOrder clientOrder = clientOrderRepository.findClientOrderById(clientOrderId).orElseThrow(() -> new IllegalStateException("ClientOrder with id " + clientOrderId + " does not exist."));
 
-        if(price != null && !Objects.equals(clientOrder.getPrice(),price)){
+        if (price != null && !Objects.equals(clientOrder.getPrice(), price)) {
             clientOrder.setPrice(price);
         }
 
-        if(quantity !=null && !Objects.equals(clientOrder.getQuantity(), quantity)){
+        if (quantity != null && !Objects.equals(clientOrder.getQuantity(), quantity)) {
             Optional<ClientOrder> clientOrderOptional = clientOrderRepository.findClientOrderById(clientOrderId);
             clientOrder.setQuantity(quantity);
         }
 
     }
+
+    @Transactional
+    public String cancelClientOrder (Long clientOrderId){
+        ClientOrder clientOrder = clientOrderRepository.findClientOrderById(clientOrderId).orElseThrow(() -> new IllegalStateException("ClientOrder with id " + clientOrderId + " does not exist."));
+
+        if (clientOrder.getStatus().equals("PENDING")) {
+            clientOrder.setStatus("CANCELLED");
+            return "CANCELLED";
+        }
+        else{
+            return "UNABLE TO CANCEL ORDER NOT PENDING";
+        }
+    }
 }
+
+
+

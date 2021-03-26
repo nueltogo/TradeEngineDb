@@ -81,7 +81,12 @@ public class Portfolio {
     }
 
     public long getClientId() {
-        return clientId;
+        if(this.clientId==0) {
+            return this.getClient().getClientId();
+        }
+        else{
+            return this.clientId;
+        }
     }
 
     public void setClientId(long clientId) {

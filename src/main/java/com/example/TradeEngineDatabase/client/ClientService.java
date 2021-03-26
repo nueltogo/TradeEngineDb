@@ -1,5 +1,6 @@
 package com.example.TradeEngineDatabase.client;
 
+import com.example.TradeEngineDatabase.portfolio.Portfolio;
 import com.example.TradeEngineDatabase.portfolio.PortfolioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ClientService {
@@ -27,9 +27,12 @@ public class ClientService {
         if(clientOptional.isPresent()){
             throw new IllegalStateException("Email already taken.");
         }
+
+        Portfolio defaultPortfolio = new Portfolio("default");
+        client.setPortfolios(defaultPortfolio);
+        defaultPortfolio.setClient(client);
         clientRepository.save(client);
-        client.getPortfolios().get(0).setClient(client);
-        portfolioRepository.save(client.getPortfolios().get(0));
+        portfolioRepository.save(defaultPortfolio);
     }
 
     public List<Client> getClients(){

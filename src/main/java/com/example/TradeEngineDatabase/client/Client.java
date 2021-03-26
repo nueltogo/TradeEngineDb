@@ -33,10 +33,12 @@ public class Client {
     private double balance;
 
     @JsonIdentityReference(alwaysAsId = true)
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     @OneToMany(targetEntity = Portfolio.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Portfolio> portfolios =  new ArrayList<>();
 
     @JsonIdentityReference(alwaysAsId = true)
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     @OneToMany(targetEntity = ClientOrder.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ClientOrder> orders = new ArrayList<>();
 

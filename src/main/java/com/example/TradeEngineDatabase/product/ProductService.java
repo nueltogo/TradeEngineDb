@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -65,17 +64,9 @@ public class ProductService {
     @Transactional
     public void updateProduct(Long productId, Integer quantity, Double lastTradedPrice, String lastTradedSide) {
         Product product = productRepository.findProductById(productId).orElseThrow(() -> new IllegalStateException("Product with id " + productId + " does not exist."));
-
-        if(quantity != null && !Objects.equals(product.getQuantity(),quantity)){
-            product.setQuantity(quantity);
-        }
-
-        if(lastTradedPrice != null && !Objects.equals(product.getLastTradedPrice(),lastTradedPrice)){
-            product.setLastTradedPrice(lastTradedPrice);
-        }
-
-        if(lastTradedSide != null && lastTradedSide.length() > 0 && !Objects.equals(product.getLastTradedSide(),lastTradedSide)){
-            product.setLastTradedSide(lastTradedSide);
-        }
+        System.out.println("Updating");
+        product.setQuantity(quantity);
+        product.setLastTradedPrice(lastTradedPrice);
+        product.setLastTradedSide(lastTradedSide);
     }
 }

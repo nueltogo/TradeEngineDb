@@ -24,6 +24,11 @@ public class PortfolioController {
         return portfolioService.getPortfolio(portfolio.getName(),portfolio.getClientId());
     }
 
+    @PostMapping("/id")
+    public List<Portfolio> getPortfolioById(@RequestBody Portfolio portfolio) throws IllegalStateException {
+        return portfolioService.getPortfolioById(portfolio.getClientId());
+    }
+
     @PostMapping("/new")
     public void addNewPortfolio(@RequestBody Portfolio portfolio) throws IllegalStateException {
         portfolioService.addNewPortfolio(portfolio);
