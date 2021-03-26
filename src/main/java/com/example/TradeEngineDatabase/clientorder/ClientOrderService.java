@@ -41,7 +41,7 @@ public class ClientOrderService {
         if (clientOrderOptional.isPresent()) {
             throw new IllegalStateException("Id already taken.");
         }
-        return clientOrderRepository.save(clientOrder);
+        return clientOrderRepository.saveAndFlush(clientOrder);
     }
 
     public List<ClientOrder> getClientOrders() {
