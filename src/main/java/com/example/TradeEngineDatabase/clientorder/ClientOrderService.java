@@ -28,7 +28,7 @@ public class ClientOrderService {
         this.portfolioRepository = portfolioRepository;
     }
 
-    public ClientOrder addNewClientOrder(ClientOrder clientOrder) {
+    public long addNewClientOrder(ClientOrder clientOrder) {
         long clientId = clientOrder.getClientId();
         Client client = clientRepository.getOne(clientId);
         long porfolioId = clientOrder.getPortfolioId();
@@ -43,7 +43,7 @@ public class ClientOrderService {
         }
         ClientOrder clientOrder1 = clientOrderRepository.save(clientOrder);
         clientOrderRepository.flush();
-        return clientOrder1;
+        return clientOrder1.getClientOrderId();
     }
 
     public List<ClientOrder> getClientOrders() {

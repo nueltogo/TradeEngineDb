@@ -46,7 +46,7 @@ public class ClientOrderController {
     }
 
     @PostMapping("/new")
-    public ClientOrder registerNewClientOrder(@RequestBody ClientOrder clientOrder) throws IllegalStateException {
+    public long registerNewClientOrder(@RequestBody ClientOrder clientOrder) throws IllegalStateException {
         return clientOrderService.addNewClientOrder(clientOrder);
     }
 
