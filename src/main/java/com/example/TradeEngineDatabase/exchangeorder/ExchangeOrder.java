@@ -37,7 +37,6 @@ public class ExchangeOrder {
     private long clientOrderId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_Order_Id")
     @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
     @JsonIdentityReference(alwaysAsId = true)
     private ClientOrder clientorder;
@@ -164,7 +163,7 @@ public class ExchangeOrder {
                 ", price=" + price +
                 ", side='" + side + '\'' +
                 ", exchange=" + exchange +
-//                ", clientOrderId=" + clientOrderId +
+                ", clientOrderId=" + this.getClientOrderId() +
                 ", status='" + status + '\'' +
                 ", createdAt=" + createdAt +
                 '}';

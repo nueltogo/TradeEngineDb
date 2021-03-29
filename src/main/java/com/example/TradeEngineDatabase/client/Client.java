@@ -2,7 +2,10 @@ package com.example.TradeEngineDatabase.client;
 
 import com.example.TradeEngineDatabase.clientorder.ClientOrder;
 import com.example.TradeEngineDatabase.portfolio.Portfolio;
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -35,11 +38,13 @@ public class Client {
     @JsonIdentityReference(alwaysAsId = true)
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     @OneToMany(targetEntity = Portfolio.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
     private List<Portfolio> portfolios =  new ArrayList<>();
 
     @JsonIdentityReference(alwaysAsId = true)
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     @OneToMany(targetEntity = ClientOrder.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
     private List<ClientOrder> orders = new ArrayList<>();
 
     private LocalDateTime createdAt = LocalDateTime.now();

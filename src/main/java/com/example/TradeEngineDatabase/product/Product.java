@@ -34,7 +34,6 @@ public class Product {
     private long portfolioId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "portfolio_Id")
     @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
     @JsonIdentityReference(alwaysAsId = true)
     private Portfolio portfolio;

@@ -4,8 +4,6 @@ import com.example.TradeEngineDatabase.client.Client;
 import com.example.TradeEngineDatabase.clientorder.ClientOrder;
 import com.example.TradeEngineDatabase.product.Product;
 import com.fasterxml.jackson.annotation.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -37,19 +35,19 @@ public class Portfolio {
     private long clientId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
     @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
-    //@JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityReference(alwaysAsId = true)
     private Client client;
 
     // client can place orders to make portforlio
     @OneToMany(targetEntity = Product.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIdentityReference(alwaysAsId = true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "portfolio_Id")
     private List<Product> products = new ArrayList<>();
 
     @OneToMany(targetEntity = ClientOrder.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIdentityReference(alwaysAsId = true)
+    @JoinColumn(name = "portfolio_Id")
     private List<ClientOrder> clientOrders = new ArrayList<>();
 
     private LocalDateTime createdAt = LocalDateTime.now();

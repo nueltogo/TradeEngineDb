@@ -44,19 +44,18 @@ public class ClientOrder {
     private long portfolioId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "portfolio_Id")
     @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
     @JsonIdentityReference(alwaysAsId = true)
     private Portfolio portfolio;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
     @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
     @JsonIdentityReference(alwaysAsId = true)
     private Client client;
 
     @OneToMany(targetEntity = ExchangeOrder.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIdentityReference(alwaysAsId = true)
+    @JoinColumn(name = "client_Order_Id")
     private List<ExchangeOrder> orders = new ArrayList<>();
 
     private LocalDateTime createdAt = LocalDateTime.now();
