@@ -72,17 +72,19 @@ public class ExchangeOrderService {
         exchangeOrderRepository.deleteByExchangeOrderId(exchangeOrderId);
     }
 
-//    public void checkStatus(String exchangeOrderId, int exchange){
-//        String baseURl;
-//
-//        switch (exchange) {
-//            case 1 -> baseURl = "https://exchange.matraining.com/";
-//            case 2 -> baseURl = "https://exchange2.matraining.com/";
-//        }
-//
-//        RestTemplate restTemplate = new RestTemplate();
-//        restTemplate
-//    }
+    public ExchangeStatus checkStatus(String exchangeOrderId, int exchange){
+        String baseURl;
+        final String privateKey = "6b055a2f-c488-4386-83b8-e9f30c773d35";
+
+        switch (exchange) {
+            case 1 -> baseURl = "https://exchange.matraining.com/"+privateKey+"/order/"+exchangeOrderId;
+            case 2 -> baseURl = "https://exchange2.matraining.com/"+privateKey+"/order/"+exchangeOrderId;
+            default -> throw new IllegalStateException("exchange does not exist");
+        }
+
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(baseURl,ExchangeStatus.class);
+    }
 
     @Transactional
     public void updateExchangeOrder(String exchangeOrderId, Double price, Integer quantity) {

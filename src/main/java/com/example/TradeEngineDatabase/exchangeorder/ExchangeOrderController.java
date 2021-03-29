@@ -1,9 +1,12 @@
 package com.example.TradeEngineDatabase.exchangeorder;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping(path = "api/v1/exchangeorder")
 public class ExchangeOrderController {
@@ -55,8 +58,13 @@ public class ExchangeOrderController {
     }
 
 
+//    @Scheduled(fixedRate = 10000)
 //    public void updateClient(){
 //        System.out.println("Scheduled task has begun.");
 //        List<ExchangeOrder> orderList = exchangeOrderService.getByStatus("PENDING");
+//        List<ExchangeOrder> statusList = orderList.stream()
+//                .filter(x -> x.getQuantity().equals(exchangeOrderService.checkStatus(x.getExchangeOrderId(),x.getExchange()).getCumulativeQuantity()))
+//                .collect(Collectors.toList());
+//        System.out.println(statusList);
 //    }
 }

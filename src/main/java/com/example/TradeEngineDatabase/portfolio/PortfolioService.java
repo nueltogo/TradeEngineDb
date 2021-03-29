@@ -19,7 +19,7 @@ public class PortfolioService {
         this.clientRepository = clientRepository;
     }
 
-    public void addNewPortfolio(Portfolio portfolio) {
+    public Portfolio addNewPortfolio(Portfolio portfolio) {
         Long id = portfolio.getClientId();
         Client client = clientRepository.getOne(id);
         portfolio.setClient(client);
@@ -28,7 +28,9 @@ public class PortfolioService {
         if(portfolioOptional.isPresent()){
             throw new IllegalStateException("Id already taken.");
         }
-        portfolioRepository.save(portfolio);
+        Portfolio portfolio1 = portfolioRepository.save(portfolio);
+        portfolioRepository.flush();
+        return portfolio1;
     }
 
     public List<Portfolio> getPortfolios(){
