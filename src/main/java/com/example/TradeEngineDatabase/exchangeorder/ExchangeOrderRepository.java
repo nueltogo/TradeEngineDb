@@ -15,5 +15,7 @@ public interface ExchangeOrderRepository extends JpaRepository<ExchangeOrder, Lo
 
     Optional<List<ExchangeOrder>> findByClientorder_ClientOrderId(long clientOrderId);
 
+    Optional<List<ExchangeOrder>> findByStatus(String status);
+
     void deleteByExchangeOrderId(String exchangeOrderId);
 }

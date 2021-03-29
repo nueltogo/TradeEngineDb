@@ -24,6 +24,11 @@ public class ExchangeOrderController {
         return exchangeOrderService.getByClientOrder(id);
     }
 
+    @GetMapping("/status/{status}")
+    public List<ExchangeOrder> getByStatus(@PathVariable("status") String status) throws IllegalStateException {
+        return exchangeOrderService.getByStatus(status);
+    }
+
     @PostMapping("/get")
     public ExchangeOrder getExchangeOrder(@RequestBody ExchangeOrder exchangeOrder) throws IllegalStateException {
         return exchangeOrderService.getExchangeOrder(exchangeOrder);
@@ -48,4 +53,11 @@ public class ExchangeOrderController {
     ) throws IllegalStateException {
         exchangeOrderService.updateExchangeOrder(exchangeOrderId, price, quantity);
     }
+
+
+//    public void updateClient(){
+//        System.out.println("Scheduled task has begun.");
+//        List<ExchangeOrder> orderList = exchangeOrderService.getByStatus("PENDING");
+//
+//    }
 }

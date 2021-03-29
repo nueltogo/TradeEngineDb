@@ -55,6 +55,14 @@ public class ExchangeOrderService {
         throw new IllegalStateException("Exchange Order with client order id "+clientOrderId+" does not exist.");
     }
 
+    public List<ExchangeOrder> getByStatus(String status){
+        Optional <List<ExchangeOrder>> exchangeOrders = exchangeOrderRepository.findByStatus(status);
+        if(exchangeOrders.isPresent()){
+            return exchangeOrders.get();
+        }
+        throw new IllegalStateException("Exchange Order with status "+status+" does not exist.");
+    }
+
     public void deleteExchangeOrder(String exchangeOrderId) {
         Optional<ExchangeOrder> exchangeOrderOptional = exchangeOrderRepository.findByExchangeOrderId(exchangeOrderId);
         if(!exchangeOrderOptional.isPresent()){
@@ -62,6 +70,18 @@ public class ExchangeOrderService {
         }
         exchangeOrderRepository.deleteByExchangeOrderId(exchangeOrderId);
     }
+
+//    public void checkStatus(String exchangeOrderId, int exchange){
+//        String baseURl;
+//
+//        switch (exchange) {
+//            case 1 -> baseURl = "https://exchange.matraining.com/";
+//            case 2 -> baseURl = "https://exchange2.matraining.com/";
+//        }
+//
+//
+//
+//    }
 
     @Transactional
     public void updateExchangeOrder(String exchangeOrderId, Double price, Integer quantity) {
