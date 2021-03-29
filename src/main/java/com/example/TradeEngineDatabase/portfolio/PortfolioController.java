@@ -24,6 +24,11 @@ public class PortfolioController {
         return portfolioService.getPortfolio(portfolio.getName(),portfolio.getClientId());
     }
 
+    @GetMapping("/id/{id}")
+    public Portfolio getPortfolioId(@PathVariable("id") long id){
+        return portfolioService.getPortfolioByPortId(id);
+    }
+
     @GetMapping("/client/{clientId}")
     public List<Portfolio> getPortfolioById(@PathVariable("clientId") long clientId) throws IllegalStateException {
         return portfolioService.getPortfolioById(clientId);
