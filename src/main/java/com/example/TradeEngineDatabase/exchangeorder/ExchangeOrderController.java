@@ -58,6 +58,5 @@ public class ExchangeOrderController {
 //    public void updateClient(){
 //        System.out.println("Scheduled task has begun.");
 //        List<ExchangeOrder> orderList = exchangeOrderService.getByStatus("PENDING");
-//
 //    }
 }

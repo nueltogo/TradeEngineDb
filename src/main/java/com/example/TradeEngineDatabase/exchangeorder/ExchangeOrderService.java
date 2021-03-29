@@ -5,6 +5,7 @@ import com.example.TradeEngineDatabase.clientorder.ClientOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Objects;
@@ -79,8 +80,8 @@ public class ExchangeOrderService {
 //            case 2 -> baseURl = "https://exchange2.matraining.com/";
 //        }
 //
-//
-//
+//        RestTemplate restTemplate = new RestTemplate();
+//        restTemplate
 //    }
 
     @Transactional
