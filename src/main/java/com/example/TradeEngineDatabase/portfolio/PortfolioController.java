@@ -30,8 +30,8 @@ public class PortfolioController {
     }
 
     @PostMapping("/new")
-    public void addNewPortfolio(@RequestBody Portfolio portfolio) throws IllegalStateException {
-        portfolioService.addNewPortfolio(portfolio);
+    public Portfolio addNewPortfolio(@RequestBody Portfolio portfolio) throws IllegalStateException {
+        return portfolioService.addNewPortfolio(portfolio);
     }
 
     @DeleteMapping("/delete/{portfolioId}")
