@@ -84,13 +84,10 @@ public class ExchangeOrderController {
         System.out.println(statusList);
         statusList.forEach(x->exchangeOrderService.exchangeOrderCompleted(x.getExchangeOrderId(),"UPDATING"));
         List<ExchangeOrder> orderList1 = exchangeOrderService.getByStatus("UPDATING");
-        System.out.println(orderList1);
         List<ExchangeOrder> exorderlist = exchangeOrderService.getByStatus("UPDATING");
         System.out.println(exorderlist);
         exorderlist.forEach(x->exchangeOrderService.exchangeOrderCompleted(x.getExchangeOrderId(), "COMPLETED"));
-        List<ExchangeOrder> check = exchangeOrderService.getByStatus("COMPLETED");
-        System.out.println("check");
-        System.out.println(check);
+        System.out.println(orderList1);
         orderList1.forEach(x->clientOrderService.ClientOrderCompleted(x.getClientOrderId(),"UPDATING"));
         List<ClientOrder> orderList2 = clientOrderService.getByStatus("UPDATING");
         System.out.println(orderList2);
