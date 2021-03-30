@@ -111,12 +111,7 @@ public class ExchangeOrderService {
     public String exchangeOrderCompleted (String exchangeOrderId, String Status){
         ExchangeOrder exchangeOrder = exchangeOrderRepository.findByExchangeOrderId(exchangeOrderId).orElseThrow(() -> new IllegalStateException("ClientOrder with id " + exchangeOrderId + " does not exist."));
 
-        if (exchangeOrder.getStatus().equals("PENDING")) {
-            exchangeOrder.setStatus(Status);
-            return "COMPLETED";
-        }
-        else{
-            return "UNABLE TO COMPLETE ORDER NOT PENDING";
-        }
+        exchangeOrder.setStatus(Status);
+        return "COMPLETED";
     }
 }

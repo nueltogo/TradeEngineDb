@@ -49,4 +49,14 @@ public class ExchangeStatus {
     public void setCumulativeQuantity(int cumulativeQuantity) {
         this.cumulativeQuantity = cumulativeQuantity;
     }
+
+    @Override
+    public String toString() {
+        return "ExchangeStatus{" +
+                "quantity=" + quantity +
+                ", side='" + side + '\'' +
+                ", executionsList=" + executionsList +
+                ", cumulativeQuantity=" + cumulativeQuantity +
+                '}';
+    }
 }
