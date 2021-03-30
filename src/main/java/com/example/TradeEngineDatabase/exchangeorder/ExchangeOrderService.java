@@ -24,6 +24,7 @@ public class ExchangeOrderService {
     }
 
     public void addNewExchangeOrder(ExchangeOrder exchangeOrder) {
+        System.out.println(exchangeOrder);
         Long clientOrderid = exchangeOrder.getClientOrderId();
         ClientOrder clientOrder = clientOrderRepository.getOne(clientOrderid);
         exchangeOrder.setClientorder(clientOrder);
@@ -72,7 +73,7 @@ public class ExchangeOrderService {
         exchangeOrderRepository.deleteByExchangeOrderId(exchangeOrderId);
     }
 
-    public ExchangeStatus checkStatus(String exchangeOrderId, int exchange){
+    public Boolean checkStatus(String exchangeOrderId, int exchange){
         String baseURl;
         final String privateKey = "6b055a2f-c488-4386-83b8-e9f30c773d35";
 
@@ -83,7 +84,12 @@ public class ExchangeOrderService {
         }
 
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(baseURl,ExchangeStatus.class);
+        try {
+            restTemplate.getForObject(baseURl, ExchangeStatus.class);
+            return false;
+        }catch (Exception e){
+            return true;
+        }
     }
 
     @Transactional
@@ -99,5 +105,18 @@ public class ExchangeOrderService {
             exchangeOrder.setQuantity(quantity);
         }
 
+    }
+
+    @Transactional
+    public String exchangeOrderCompleted (String exchangeOrderId, String Status){
+        ExchangeOrder exchangeOrder = exchangeOrderRepository.findByExchangeOrderId(exchangeOrderId).orElseThrow(() -> new IllegalStateException("ClientOrder with id " + exchangeOrderId + " does not exist."));
+
+        if (exchangeOrder.getStatus().equals("PENDING")) {
+            exchangeOrder.setStatus(Status);
+            return "COMPLETED";
+        }
+        else{
+            return "UNABLE TO COMPLETE ORDER NOT PENDING";
+        }
     }
 }

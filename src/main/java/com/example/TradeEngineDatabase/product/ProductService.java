@@ -45,6 +45,14 @@ public class ProductService {
         throw new IllegalStateException("product does not exist.");
     }
 
+    public Product getProductByIdAndName(long portfolioId, String name) {
+        Optional<Product> productOptional = productRepository.findByPortfolio_PortfolioIdAndTicker(portfolioId,name);
+        if(productOptional.isPresent()){
+            return productOptional.get();
+        }
+        throw new IllegalStateException("product does not exist.");
+    }
+
     public List<Product> getProductsInPortfolio(long portfolioId){
         Optional<List<Product>> optionalProducts = productRepository.findByPortfolio_PortfolioId(portfolioId);
         if(optionalProducts.isPresent()){
@@ -68,5 +76,20 @@ public class ProductService {
         product.setQuantity(quantity);
         product.setLastTradedPrice(lastTradedPrice);
         product.setLastTradedSide(lastTradedSide);
+    }
+
+    @Transactional
+    public void updatePortfolio(long portfolioId, String ticker, Integer quantity, Double lastTradedPrice, String lastTradedSide) {
+        Optional<Product> product = productRepository.findByPortfolio_PortfolioIdAndTicker(portfolioId,ticker);
+        if(product.isPresent()) {
+            Product product1 = product.get();
+            System.out.println("Updating");
+            product1.setQuantity(product1.getQuantity() + quantity);
+            product1.setLastTradedPrice(lastTradedPrice);
+            product1.setLastTradedSide(lastTradedSide);
+        }
+        else{
+            this.addNewProduct(new Product(ticker,quantity,lastTradedPrice,lastTradedSide,portfolioId));
+        }
     }
 }

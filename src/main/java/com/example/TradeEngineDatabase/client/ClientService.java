@@ -66,7 +66,7 @@ public class ClientService {
     @Transactional
     public void updateClient(Long clientId, String name, String password, Double balance) {
         Client client = clientRepository.findClientById(clientId).orElseThrow(() -> new IllegalStateException("Student with id " + clientId + " does not exist."));
-
+        System.out.println("updating :" + balance);
         if(name != null && name.length() > 0 && !Objects.equals(client.getName(),name)){
             client.setName(name);
         }
@@ -80,6 +80,15 @@ public class ClientService {
             client.setBalance(balance);
         }
 
+    }
+
+    @Transactional
+    public void updateBAlClient(Long clientId, Double balance) {
+        Client client = clientRepository.findClientById(clientId).orElseThrow(() -> new IllegalStateException("Student with id " + clientId + " does not exist."));
+
+        if(balance != null && !Objects.equals(client.getBalance(),balance)){
+            client.setBalance(client.getBalance()+balance);
+        }
     }
 
 

@@ -1,5 +1,9 @@
 package com.example.TradeEngineDatabase.exchangeorder;
 
+import com.example.TradeEngineDatabase.client.ClientService;
+import com.example.TradeEngineDatabase.clientorder.ClientOrder;
+import com.example.TradeEngineDatabase.clientorder.ClientOrderService;
+import com.example.TradeEngineDatabase.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +15,19 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "api/v1/exchangeorder")
 public class ExchangeOrderController {
     private final ExchangeOrderService exchangeOrderService;
+    private final ClientOrderService clientOrderService;
+    private final ProductService productService;
+    private final ClientService clientService;
 
     @Autowired
-    public ExchangeOrderController(ExchangeOrderService exchangeOrderService) {
+    public ExchangeOrderController(ExchangeOrderService exchangeOrderService,
+                                   ClientOrderService clientOrderService,
+                                   ProductService productService,
+                                   ClientService clientService) {
         this.exchangeOrderService = exchangeOrderService;
+        this.clientOrderService = clientOrderService;
+        this.productService = productService;
+        this.clientService = clientService;
     }
 
     @GetMapping("/all")
@@ -39,6 +52,8 @@ public class ExchangeOrderController {
 
     @PostMapping("/new")
     public void addExchangeOrder(@RequestBody ExchangeOrder exchangeOrder) throws IllegalStateException {
+        System.out.println(exchangeOrder);
+        System.out.println("here");
         exchangeOrderService.addNewExchangeOrder(exchangeOrder);
     }
 
@@ -58,13 +73,27 @@ public class ExchangeOrderController {
     }
 
 
-//    @Scheduled(fixedRate = 10000)
-//    public void updateClient(){
-//        System.out.println("Scheduled task has begun.");
-//        List<ExchangeOrder> orderList = exchangeOrderService.getByStatus("PENDING");
-//        List<ExchangeOrder> statusList = orderList.stream()
-//                .filter(x -> x.getQuantity().equals(exchangeOrderService.checkStatus(x.getExchangeOrderId(),x.getExchange()).getCumulativeQuantity()))
-//                .collect(Collectors.toList());
-//        System.out.println(statusList);
-//    }
+    @Scheduled(fixedRate = 10000)
+    public void updateClient(){
+        System.out.println("Scheduled task has begun.");
+        List<ExchangeOrder> orderList = exchangeOrderService.getByStatus("PENDING");
+        List<ExchangeOrder> statusList = orderList.stream()
+                .filter(x -> exchangeOrderService.checkStatus(x.getExchangeOrderId(),x.getExchange()))
+                .collect(Collectors.toList());
+        statusList.forEach(x->exchangeOrderService.exchangeOrderCompleted(x.getExchangeOrderId(),"UPDATING"));
+        List<ExchangeOrder> orderList1 = exchangeOrderService.getByStatus("UPDATING");
+        List<ExchangeOrder> exorderlist = exchangeOrderService.getByStatus("UPDATING");
+        exorderlist.forEach(x->exchangeOrderService.exchangeOrderCompleted(x.getExchangeOrderId(), "COMPLETED"));
+        orderList1.forEach(x->clientOrderService.ClientOrderCompleted(x.getClientOrderId(),"UPDATING"));
+        List<ClientOrder> orderList2 = clientOrderService.getByStatus("UPDATING");
+        List<ClientOrder> orderList3 = clientOrderService.getByStatus("UPDATING");
+        List<ClientOrder> orderList4 = clientOrderService.getByStatus("UPDATING");
+        List<ClientOrder> orderList5 = clientOrderService.getByStatus("UPDATING");
+        orderList2.stream().filter(x-> x.getSide().equals("BUY")).forEach(x->productService.updatePortfolio(x.getPortfolioId(),x.getProduct(),x.getQuantity(),x.getPrice(),x.getSide()));
+        orderList3.stream().filter(x-> x.getSide().equals("SELL")).forEach(x->productService.updatePortfolio(x.getPortfolioId(),x.getProduct(),-(x.getQuantity()),x.getPrice(),x.getSide()));
+        orderList4.stream().filter(x-> x.getSide().equals("BUY")).forEach(x->clientService.updateBAlClient(x.getClientId(),-(x.getPrice()*x.getQuantity())));
+        orderList5.stream().filter(x-> x.getSide().equals("SELL")).forEach(x->clientService.updateBAlClient(x.getClientId(),(x.getPrice()*x.getQuantity())));
+        List<ClientOrder> orderList6 = clientOrderService.getByStatus("UPDATING");
+        orderList6.forEach(x->clientOrderService.ClientOrderCompleted(x.getClientOrderId(),"COMPLETED"));
+    }
 }

@@ -66,6 +66,14 @@ public class ClientOrderService {
         throw new IllegalStateException("Client Order with  client id " + clientId + " does not exist");
     }
 
+    public ClientOrder getById(long clientOrderId) {
+        Optional<ClientOrder> clientOrderOptional = clientOrderRepository.findById(clientOrderId);
+        if (clientOrderOptional.isPresent()) {
+            return clientOrderOptional.get();
+        }
+        throw new IllegalStateException("Client Order with  client id " + clientOrderId + " does not exist");
+    }
+
     public List<ClientOrder> getByPortfolio(long portfolioId) {
         Optional<List<ClientOrder>> clientOrderOptional = clientOrderRepository.findByPortfolio_PortfolioId(portfolioId);
         if (clientOrderOptional.isPresent()) {
@@ -124,6 +132,13 @@ public class ClientOrderService {
         else{
             return "UNABLE TO CANCEL ORDER NOT PENDING";
         }
+    }
+
+    @Transactional
+    public String ClientOrderCompleted (Long clientOrderId, String status){
+        ClientOrder clientOrder = clientOrderRepository.findClientOrderById(clientOrderId).orElseThrow(() -> new IllegalStateException("ClientOrder with id " + clientOrderId + " does not exist."));
+        clientOrder.setStatus(status);
+        return "COMPLETED";
     }
 }
 

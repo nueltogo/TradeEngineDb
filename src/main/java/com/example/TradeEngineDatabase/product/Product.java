@@ -54,6 +54,14 @@ public class Product {
         this.lastTradedSide = lastTradedSide;
     }
 
+    public Product(String ticker, int quantity, double lastTradedPrice, String lastTradedSide, long portfolioId) {
+        this.ticker = ticker;
+        this.quantity = quantity;
+        this.lastTradedPrice = lastTradedPrice;
+        this.lastTradedSide = lastTradedSide;
+        this.portfolioId = portfolioId;
+    }
+
     public long getProductId() {
         return productId;
     }

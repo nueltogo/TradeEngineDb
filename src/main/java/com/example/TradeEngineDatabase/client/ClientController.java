@@ -43,10 +43,11 @@ public class ClientController {
     @PutMapping("/update/{clientId}")
     public void updateClient(
             @PathVariable("clientId") Long clientId,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String password,
-            @RequestParam(required = false) Double balance
+            @RequestParam(value="name",required = false) String name,
+            @RequestParam(value="password",required = false) String password,
+            @RequestParam() Double balance
     ) throws IllegalStateException {
+        System.out.println(balance);
         clientService.updateClient(clientId, name, password, balance);
     }
 }
