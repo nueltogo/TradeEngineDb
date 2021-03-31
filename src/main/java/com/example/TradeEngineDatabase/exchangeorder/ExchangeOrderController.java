@@ -90,10 +90,10 @@ public class ExchangeOrderController {
         System.out.println(orderList1);
         orderList1.forEach(x->clientOrderService.ClientOrderCompleted(x.getClientOrderId(),"UPDATING"));
         List<ClientOrder> orderList2 = clientOrderService.getByStatus("UPDATING");
-        System.out.println(orderList2);
         List<ClientOrder> orderList3 = clientOrderService.getByStatus("UPDATING");
         List<ClientOrder> orderList4 = clientOrderService.getByStatus("UPDATING");
         List<ClientOrder> orderList5 = clientOrderService.getByStatus("UPDATING");
+        System.out.println(orderList2);
         orderList2.stream().filter(x-> x.getSide().equals("BUY")).forEach(x->productService.updatePortfolio(x.getPortfolioId(),x.getProduct(),x.getQuantity(),x.getPrice(),x.getSide()));
         orderList3.stream().filter(x-> x.getSide().equals("SELL")).forEach(x->productService.updatePortfolio(x.getPortfolioId(),x.getProduct(),-(x.getQuantity()),x.getPrice(),x.getSide()));
         orderList4.stream().filter(x-> x.getSide().equals("BUY")).forEach(x->clientService.updateBAlClient(x.getClientId(),-(x.getPrice()*x.getQuantity())));

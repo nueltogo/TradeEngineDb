@@ -30,6 +30,11 @@ public class ClientController {
         return clientService.getClientId(client);
     }
 
+    @GetMapping("/email/{email}")
+    public Client getClientId(@PathVariable("email") String email) throws IllegalStateException {
+        return clientService.getClientByEmail(email);
+    }
+
     @PostMapping("/register")
     public void registerNewClient(@RequestBody Client client) throws IllegalStateException {
         clientService.addNewClient(client);
@@ -45,7 +50,7 @@ public class ClientController {
             @PathVariable("clientId") Long clientId,
             @RequestParam(value="name",required = false) String name,
             @RequestParam(value="password",required = false) String password,
-            @RequestParam() Double balance
+            @RequestParam(value="balance", required = false) Double balance
     ) throws IllegalStateException {
         System.out.println(balance);
         clientService.updateClient(clientId, name, password, balance);

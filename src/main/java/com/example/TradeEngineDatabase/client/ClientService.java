@@ -23,7 +23,7 @@ public class ClientService {
     }
 
     public void addNewClient(Client client) {
-        Optional<Client> clientOptional = clientRepository.findClientByEmail(client.getEmail());
+        Optional<Client> clientOptional = clientRepository.findByEmail(client.getEmail());
         if(clientOptional.isPresent()){
             throw new IllegalStateException("Email already taken.");
         }
@@ -41,6 +41,14 @@ public class ClientService {
 
     public Client getClient(Client client) {
         Optional<Client> clientOptional = clientRepository.findClientByEmailAndPass(client.getEmail(), client.getPassword());
+        if(clientOptional.isPresent()){
+            return clientOptional.get();
+        }
+        throw new IllegalStateException("Invalid Credentials");
+    }
+
+    public Client getClientByEmail(String email) {
+        Optional<Client> clientOptional = clientRepository.findByEmail(email);
         if(clientOptional.isPresent()){
             return clientOptional.get();
         }
