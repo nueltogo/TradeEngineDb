@@ -23,6 +23,7 @@ public class ClientService {
     }
 
     public void addNewClient(Client client) {
+        client.setBalance(2000);
         Optional<Client> clientOptional = clientRepository.findByEmail(client.getEmail());
         if(clientOptional.isPresent()){
             throw new IllegalStateException("Email already taken.");
